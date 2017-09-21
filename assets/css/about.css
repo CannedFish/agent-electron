@@ -153,3 +153,30 @@ footer.about-section {
     display: flex;
   }
 }
+
+.login-controls {
+  display: flex;
+  align-items: center;
+}
+
+.login-input {
+  flex: 1;
+  border: 2px solid var(--color-border);
+  border-radius: 4px;
+  font: inherit;
+  font-size: 1.2em;
+  padding: .4em .8em;
+  color: inherit;
+  background-color: transparent;
+}
+.login-input:focus {
+  outline: none;
+  border-color: hsl(0,0%,80%);
+  background-color: white;
+}
+
+.login-tip {
+  width: 75px;
+  font-size: 1.2em;
+  margin-right: 10px;
+}

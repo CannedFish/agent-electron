@@ -1,0 +1,26 @@
+<template class="task-template">
+  <div id="logout-modal" class="about modal">
+    <div class="about-wrapper">
+      <header class="about-header">
+        <img class="about-logo" src="assets/img/about.png" srcset="assets/img/about.png 1x, assets/img/about@2x.png 2x" alt="Agent Electron">
+      </header>
+      <main class="about-sections">
+        <section class="about-section">
+          <div>Logout?</div>
+        </section>
+        <footer class="about-section footer">
+          <div class="rainbow-button-wrapper">
+            <button id="logout" class="about-button">Logout</button>
+          </div>
+          <div class="rainbow-button-wrapper">
+            <button id="logout-cancel" class="about-button modal-hide">Cancel</button>
+          </div>
+        </footer>
+      </main>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    require('./renderer-process/login-out/logout')
+  </script>
+</template>

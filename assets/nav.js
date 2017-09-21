@@ -10,23 +10,32 @@ document.body.addEventListener('click', function (event) {
   }
 })
 
+const sectionShowEvent = new Event('section-show')
+var currentSectionId = null
+
 function handleSectionTrigger (event) {
+  const sectionId = event.target.dataset.section + '-section'
+  if (currentSectionId == sectionId) {
+    return 
+  }
+
   hideAllSectionsAndDeselectButtons()
 
   // Highlight clicked button and show view
   event.target.classList.add('is-selected')
 
   // Display the current section
-  const sectionId = event.target.dataset.section + '-section'
-  document.getElementById(sectionId).classList.add('is-shown')
+  const sectionObj = document.getElementById(sectionId)
+  sectionObj.classList.add('is-shown')
+  sectionObj.dispatchEvent(sectionShowEvent)
 
   // Save currently active button in localStorage
-  const buttonId = event.target.getAttribute('id')
-  settings.set('activeSectionButtonId', buttonId)
+  currentSectionId = sectionId
+  // settings.set('activeSectionButtonId', buttonId)
 }
 
 function activateDefaultSection () {
-  document.getElementById('button-windows').click()
+  document.getElementById('button-all-files').click()
 }
 
 function showMainContent () {
@@ -48,10 +57,13 @@ function hideAllModals () {
   showMainContent()
 }
 
+const sectionHideEvent = new Event('section-hide')
+
 function hideAllSectionsAndDeselectButtons () {
   const sections = document.querySelectorAll('.js-section.is-shown')
   Array.prototype.forEach.call(sections, function (section) {
     section.classList.remove('is-shown')
+    section.dispatchEvent(sectionHideEvent)
   })
 
   const buttons = document.querySelectorAll('.nav-button.is-selected')
@@ -60,17 +72,17 @@ function hideAllSectionsAndDeselectButtons () {
   })
 }
 
-function displayAbout () {
-  document.querySelector('#about-modal').classList.add('is-shown')
+function displayLogin () {
+  document.querySelector('#login-modal').classList.add('is-shown')
 }
 
 // Default to the view that was active the last time the app was open
-const sectionId = settings.get('activeSectionButtonId')
-if (sectionId) {
-  showMainContent()
-  const section = document.getElementById(sectionId)
-  if (section) section.click()
-} else {
-  activateDefaultSection()
-  displayAbout()
-}
+// const sectionId = settings.get('activeSectionButtonId')
+// if (sectionId) {
+  // showMainContent()
+  // const section = document.getElementById(sectionId)
+  // if (section) section.click()
+// } else {
+  // activateDefaultSection()
+  displayLogin()
+// }
