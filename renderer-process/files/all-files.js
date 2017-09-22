@@ -4,13 +4,14 @@ const selfSection = document.getElementById('all-files-section')
 
 selfSection.addEventListener('section-show', function () {
   console.log('All files show')
+  ipc.send('get-files', 'level')
 })
 
 selfSection.addEventListener('section-hide', function () {
   console.log('All files hide')
 })
   
-selfSection.addEventListener('click', function () {
-  console.log('section clicked')
+ipc.on('get-files-reply', function (evt, arg) {
+  console.log(arg)
 })
 
