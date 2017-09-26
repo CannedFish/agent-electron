@@ -1,14 +1,18 @@
 const ipc = require('electron').ipcMain
-const fs = require('fs')
 
-const FileTree = require('./main-process/files/tree').FileTree
+const r_api = require('./main-process/files/remote-api')
 
-let fileTree = new FileTree()
+ipc.on('get-files', (evt, parentPath) => {
+  r_api.getFileList(parentPath, (err, files) => {
+    if(err != null) {
+      console.log(err)
+      return 
+    }
 
-ipc.on('get-files', (evt, arg) => {
-  fs.readdir('.', (err, files) => {
-    fileTree.update(files)
-    evt.sender.send('get-files-reply', fileTree.toString())
+    // fileTree.update(files)
+    evt.sender.send('get-files-reply', files.map((f) => {
+      f.toString()
+    }))
   })
 })
 

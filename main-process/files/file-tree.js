@@ -27,5 +27,21 @@ class FileTree {
 
   toString() {}
 }
-
 exports.FileTree = FileTree
+
+class FileNode {
+  constructor(parent, name, type) {
+    this.parent = parent
+    this.name = name
+    this.type = type // 'd' or 'f'
+  }
+
+  toString() {
+    JSON.stringify({
+      'parent': this.parent,
+      'name': this.name,
+      'type': this.type
+    })
+  }
+}
+exports.FileNode = FileNode
