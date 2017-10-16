@@ -46,7 +46,6 @@ function initialize () {
   }
 
   app.on('ready', function () {
-    // TODO: change to login window
     createWindow()
     autoUpdater.initialize()
   })

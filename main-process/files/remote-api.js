@@ -1,4 +1,4 @@
-const FileNode = require('./main-process/files/file-tree').FileNode
+const FileNode = require('./file-tree').FileNode
 
 exports.getFileList = function(cur, callback) {
   // callback: (err, files)

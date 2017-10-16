@@ -1,6 +1,6 @@
 const ipc = require('electron').ipcMain
 
-const r_api = require('./main-process/files/remote-api')
+const r_api = require('./remote-api')
 
 ipc.on('get-files', (evt, parentPath) => {
   r_api.getFileList(parentPath, (err, files) => {
@@ -11,7 +11,7 @@ ipc.on('get-files', (evt, parentPath) => {
 
     // fileTree.update(files)
     evt.sender.send('get-files-reply', files.map((f) => {
-      f.toString()
+      return f.toString()
     }))
   })
 })

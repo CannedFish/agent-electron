@@ -17,15 +17,17 @@ loginBtn.addEventListener('click', function () {
 })
 
 ipc.on('login-reply', function (event, arg) {
-  if (arg === 'ok') {
+  if (arg != null) {
+    alert("Username or Password is invalid!")
+  } else {
+    // TODO: Send event to close this window
+    //       and create main window
     usrInput.value = ''
     pwdInput.value = ''
 
     loginModal.classList.remove('is-shown')
     showMainContent()
     allFilesBtn.click()
-  } else {
-    alert("Username or Password is invalid!")
   }
 })
 

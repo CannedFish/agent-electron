@@ -37,7 +37,7 @@ class FileNode {
   }
 
   toString() {
-    JSON.stringify({
+    return JSON.stringify({
       'parent': this.parent,
       'name': this.name,
       'type': this.type
