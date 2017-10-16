@@ -1,3 +1,4 @@
+const electron = require('electron')
 const BrowserWindow = electron.BrowserWindow
 
 const ipc = require('electron').ipcMain
@@ -18,17 +19,17 @@ ipc.on('login', function(event, arg) {
 function login(usr, pwd) {
   return true
 }
-export.login = login
+exports.login = login
 
 function isRemember() {
   return true
 }
-export.isRemember = isRemember
+exports.isRemember = isRemember
 
 function isAutoLogin() {
   return true
 }
-export.isAutoLogin = isAutoLogin
+exports.isAutoLogin = isAutoLogin
 
 function main(win_title) {
   var windowOptions = {
@@ -54,5 +55,5 @@ function main(win_title) {
     loginWindow = null
   })
 }
-export.main = main
+exports.main = main
 
