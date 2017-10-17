@@ -1,8 +1,8 @@
 const ipc = require('electron').ipcRenderer
 
 const loginBtn = document.getElementById('login')
-const loginModal = document.getElementById('login-modal')
-const allFilesBtn = document.getElementById('button-all-files')
+// const loginModal = document.getElementById('login-modal')
+// const allFilesBtn = document.getElementById('button-all-files')
 
 const usrInput = document.getElementById('username')
 const pwdInput = document.getElementById('password')
@@ -25,9 +25,9 @@ ipc.on('login-reply', function (event, arg) {
     usrInput.value = ''
     pwdInput.value = ''
 
-    loginModal.classList.remove('is-shown')
-    showMainContent()
-    allFilesBtn.click()
+    // loginModal.classList.remove('is-shown')
+    // showMainContent()
+    // allFilesBtn.click()
   }
 })
 

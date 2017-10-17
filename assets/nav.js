@@ -79,10 +79,12 @@ function displayLogin () {
 // Default to the view that was active the last time the app was open
 // const sectionId = settings.get('activeSectionButtonId')
 // if (sectionId) {
-  // showMainContent()
+showMainContent()
+activateDefaultSection()
   // const section = document.getElementById(sectionId)
   // if (section) section.click()
 // } else {
   // activateDefaultSection()
-  displayLogin()
+  // displayLogin()
 // }
+

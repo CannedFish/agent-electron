@@ -10,45 +10,23 @@ const debug = /--debug/.test(process.argv[2])
 
 if (process.mas) app.setName('Agent Electron')
 
-var mainWindow = null
-
 function initialize () {
   var shouldQuit = makeSingleInstance()
   if (shouldQuit) return app.quit()
 
   loadDemos()
-
-  function createWindow () {
-    var windowOptions = {
-      width: 1080,
-      minWidth: 680,
-      height: 840,
-      title: app.getName()
-    }
-
-    if (process.platform === 'linux') {
-      windowOptions.icon = path.join(__dirname, '/assets/app-icon/png/512.png')
-    }
-
-    mainWindow = new BrowserWindow(windowOptions)
-    mainWindow.loadURL(path.join('file://', __dirname, '/index.html'))
-
-    // Launch fullscreen with DevTools open, usage: npm run debug
-    if (debug) {
-      mainWindow.webContents.openDevTools()
-      mainWindow.maximize()
-      require('devtron').install()
-    }
-
-    mainWindow.on('closed', function () {
-      mainWindow = null
-    })
-  }
+  const loginWin = require(path.join(__dirname, 'main-process/login-out/login.js'))
+  const mainWin = require(path.join(__dirname, 'main-process/main-window/main-window.js'))
 
   app.on('ready', function () {
-    // TODO: change to login window
-    createWindow()
-    autoUpdater.initialize()
+    loginWin.create(app.getName(), (err, loginWindow) => {
+      if(err != null) {
+        console.log(err)
+      }
+      mainWin.create(app.getName())
+      autoUpdater.initialize()
+      loginWindow.close()
+    })
   })
 
   app.on('window-all-closed', function () {

@@ -2,12 +2,16 @@ const ipc = require('electron').ipcRenderer
 
 const logoutBtn = document.getElementById('logout')
 const logoutModal = document.getElementById('logout-modal')
-const loginModal = document.getElementById('login-modal')
+
+ipc.on('logout-reply', (evt, arg) => {
+  if(arg != null) {
+    logoutModal.classList.remove('is-shown')
+    hideMainContent()
+  }
+})
 
 logoutBtn.addEventListener('click', function () {
-  logoutModal.classList.remove('is-shown')
-  hideMainContent()
-  loginModal.classList.add('is-shown')
+  ipc.send('logout')
 })
 
 function hideMainContent () {
