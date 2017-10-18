@@ -48,8 +48,8 @@ function create(win_title, callback) {
   after_login = callback
 
   var windowOptions = {
-    width: 680,
-    height: 840,
+    width: 440,
+    height: 390,
     center: true,
     resizable: false,
     maximizable: false,
