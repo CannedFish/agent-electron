@@ -1,23 +1,39 @@
+html {
+  height: 100%;
+  font-family: PingFangSC-Regular;
+  font-size: 14px;
+  overflow: hidden; /* Prevents rubber-band scrolling of the whole "page" */
+}
+
+body {
+  margin: 0;
+  height: 100%;
+  /* display: flex; */
+}
+
 .login {
-  width: 440px;
-  height: 320px;
+  width: 100%;
+  height: 100%;
   background: #F3F3F3;
   transform: scale(1.1);
   transition: visibility 0s .12s linear , opacity .12s ease-in, transform .12s ease-in;
-  text-align: center;
+  /* text-align: center; */
 }
 
 .login-header {
   position: absolute;
-  top: 12.5%;
-  /* left: 10.2%; */
-  /* bottom: 29.6%; */
-  /* right: 10.2%; */
-  width: 180px;
-  height: 244px;
-  font-family: PingFangSC-Regular;
+  top: 40px;
+  width: 100%;
+  height: 28px;
   font-size: 20px;
   color: #999999;
+  text-align: center;
+}
+
+.login-body {
+  width: 320px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .login-input {
@@ -26,6 +42,9 @@
   background: #FFFFFF;
   border: 1px solid #CDCDCD;
   border-radius: 24px;
+  font-size: 14px;
+  color: #999999;
+  outline: none;
 }
 .login-input:focus {
   border-color: #509ED1;
@@ -33,31 +52,29 @@
 
 .login-input.usr {
   position: absolute;
-  top: 27.7%;
-  /* left: 4.7%; */
-  /* bottom: 22.6%; */
-  /* right: 4.7%; */
+  top: 88px;
 }
 
 .login-input.pwd {
   position: absolute;
-  top: 44.9%;
-  /* left: 4.7%; */
-  /* bottom: 16%; */
-  /* right: 4.7%; */
+  top: 144px;
 }
 
 .login-footer {
   position: absolute;
-  top: 73.9%;
-  /* left: 4.7%; */
-  width: 320px;
+  top: 236px;
+  width: 100%;
   height: 40px;
+  text-align: center;
 }
 .login-footer .login-btn {
-  width: 100%;
+  width: 320px;
   height: 100%;
   background: #509ED1;
   border-radius: 24px;
+  border: 1px solid #509ED1;
+  font-size: 16px;
+  color: #FFFFFF;
+  outline: none;
 }
 
