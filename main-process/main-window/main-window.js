@@ -9,9 +9,9 @@ var mainWindow = null
 
 function create(windowName) {
   var windowOptions = {
-    width: 1080,
+    width: 1280,
     minWidth: 680,
-    height: 840,
+    height: 850,
     autoHideMenuBar: true,
     title: windowName
   }

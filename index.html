@@ -21,25 +21,56 @@
 
   <nav class="nav js-nav">
     <header class="nav-header">
-      <h1 class="nav-title">User X's netdisk</h1>
+      <div class="nav-title">User X's netdisk</div>
       <svg class="nav-header-icon"><use xlink:href="assets/img/icons.svg#icon-electron"></use></svg>
+      <div class="nav-header-info nav-header-usr">用户名</div>
+      <div class="nav-header-info nav-header-space">
+        <span class="space-used"></span>
+        <span class="space-info">33GB/100GB</span>
+      </div>
     </header>
 
-    <div class="nav-item u-category-files">
-      <h5 class="nav-category">
-        <svg class="nav-icon"><use xlink:href="assets/img/icons.svg#icon-windows"></use></svg>
-        Files
-      </h5>
-      <button type="button" id="button-all-files" data-section="all-files" class="nav-button">File explorer</button>
-      <button type="button" id="button-upload-file" data-section="upload-file" class="nav-button">Upload file</button>
-    </div>
+    <div class="nav-body">
+      <div class="nav-item">
+        <svg class="nav-icon icon" aria-hidden="true">
+          <use xlink:href="#icon-quanbu"></use>
+        </svg>
+        <!-- <button type="button" id="button-all-files" data-section="all-files" class="nav-button">File explorer</button> -->
+        <!-- <button type="button" id="button-upload-file" data-section="upload-file" class="nav-button">Upload file</button> -->
+        全部文件
+      </div>
+      <div class="nav-item">
+        <svg class="nav-icon icon" aria-hidden="true">
+          <use xlink:href="#icon-tupian"></use>
+        </svg>
+        图片
+      </div>
+      <div class="nav-item">
+        <svg class="nav-icon icon" aria-hidden="true">
+          <use xlink:href="#icon-wendang"></use>
+        </svg>
+        文档
+      </div>
+      <div class="nav-item">
+        <svg class="nav-icon icon" aria-hidden="true">
+          <use xlink:href="#icon-shipin"></use>
+        </svg>
+        视频
+      </div>
+      <div class="nav-item">
+        <svg class="nav-icon icon" aria-hidden="true">
+          <use xlink:href="#icon-qita"></use>
+        </svg>
+        其他
+      </div>
 
-    <div class="nav-item u-category-settings">
-      <h5 class="nav-category">
-        <svg class="nav-icon"><use xlink:href="assets/img/icons.svg#icon-menu"></use></svg>
-        Settings
-      </h5>
-      <button type="button" id="button-settings" data-section="settings" class="nav-button">Settings</button>
+      <!-- <div class="nav-item u-category-settings"> -->
+        <!-- <h5 class="nav-category"> -->
+          <!-- <svg class="nav-icon"><use xlink:href="assets/img/icons.svg#icon-menu"></use></svg> -->
+          <!-- Settings -->
+        <!-- </h5> -->
+        <!-- <button type="button" id="button-settings" data-section="settings" class="nav-button">Settings</button> -->
+      <!-- </div> -->
     </div>
 
     <footer class="nav-footer">
@@ -51,6 +82,7 @@
   <main class="content js-content"></main>
 
   <script>
+    require('./assets/css/iconfont/iconfont.js')
     require('./assets/imports')
     require('./assets/ex-links')
     require('./assets/nav')

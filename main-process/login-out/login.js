@@ -49,7 +49,7 @@ function create(win_title, callback) {
 
   var windowOptions = {
     width: 440,
-    height: 320,
+    height: 360,
     center: true,
     resizable: false,
     maximizable: false,
