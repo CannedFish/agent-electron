@@ -29,7 +29,6 @@
         <span class="space-info">33GB/100GB</span>
       </div>
     </header>
-
     <div class="nav-body">
       <div class="nav-item">
         <svg class="nav-icon icon" aria-hidden="true">
@@ -63,7 +62,6 @@
         </svg>
         其他
       </div>
-
       <!-- <div class="nav-item u-category-settings"> -->
         <!-- <h5 class="nav-category"> -->
           <!-- <svg class="nav-icon"><use xlink:href="assets/img/icons.svg#icon-menu"></use></svg> -->
@@ -72,14 +70,33 @@
         <!-- <button type="button" id="button-settings" data-section="settings" class="nav-button">Settings</button> -->
       <!-- </div> -->
     </div>
-
     <footer class="nav-footer">
       <!-- <button type="button" id="button-logout" data-modal="login" class="nav-footer-button">Login</button> -->
       <button type="button" id="button-logout" data-modal="logout" class="demo-button">Logout</button>
     </footer>
   </nav>
 
-  <main class="content js-content"></main>
+  <main class="content js-content">
+    <header class="content-header">
+      <input type="text" class="search" placeholder="搜索网盘文件">
+      <button type="button" class="btn upload">
+        <svg class="icon"><use xlink:href="#icon-shangchuan1"></use></svg>
+        上传
+      </button>
+      <button type="button" class="btn download">
+        <svg class="icon"><use xlink:href="#icon-iconfontxiazai"></use></svg>
+        下载
+      </button>
+      <button type="button" class="btn new">
+        <svg class="icon"><use xlink:href="#icon-xinjian"></use></svg>
+        新建
+      </button>
+      <button type="button" class="btn more">
+        <svg class="icon"><use xlink:href="#icon-gengduo-copy"></use></svg>
+        更多
+      </button>
+    </header>
+  </main>
 
   <script>
     require('./assets/css/iconfont/iconfont.js')
