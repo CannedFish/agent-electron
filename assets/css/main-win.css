@@ -1,0 +1,57 @@
+.content .content-header .search {
+  position: absolute;
+  top: 110px;
+  left: 40px;
+  width: 308px;
+  height: 25px;
+  background: #FFFFFF;
+  border: 1px solid #CDCDCD;
+  border-radius: 24px;
+  padding: 3px 0px 0px 12px;
+  font-size: 14px;
+  color: #999999;
+  outline: none;
+}
+.content .content-header .search:focus,
+.content .content-header .search:hover {
+  border: 1px solid #509ED1;
+}
+
+.content .content-header .btn {
+  position: absolute;
+  width: 80px;
+  height: 30px;
+  top: 110px;
+  opacity: 0.6;
+  border-radius: 8px;
+  border: 1px solid #509ED1;
+  vertical-align: middle;
+  text-align: center;
+  font-size: 14px;
+  color: #509ED1;
+  outline: none;
+  background: #F9F9F9;
+}
+.content .content-header .btn:active {
+  text-shadow: 0 0 0.2em #509ED1, -0 -0 0.2em #509ED1;
+  width: 78px;
+  height: 28px;
+  border: 3px solid #509ED1;
+}
+.content .content-header .btn:hover {
+  background: rgba(80, 158, 209, 0.10);
+}
+
+.content .content-header .btn.upload {
+  left: 420px;
+}
+.content .content-header .btn.download {
+  left: 520px;
+}
+.content .content-header .btn.new {
+  left: 620px;
+}
+.content .content-header .btn.more {
+  left: 720px;
+}
+

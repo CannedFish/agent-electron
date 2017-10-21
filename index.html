@@ -9,101 +9,26 @@
   <link rel="stylesheet" href="assets/css/about.css">
   <link rel="stylesheet" href="assets/css/nav.css">
   <link rel="stylesheet" href="assets/css/section.css">
-  <link rel="stylesheet" href="assets/css/demo.css">
-  <link rel="stylesheet" href="assets/css/github.css">
+  <!-- <link rel="stylesheet" href="assets/css/demo.css"> -->
+  <!-- <link rel="stylesheet" href="assets/css/github.css"> -->
+  <link rel="stylesheet" href="assets/css/main-win.css">
 
-  <link rel="import" href="sections/files/all-files.html">
-  <link rel="import" href="sections/files/upload-file.html">
-  <link rel="import" href="sections/settings/settings.html">
+  <link rel="import" href="sections/main-window/nav.html">
+  <link rel="import" href="sections/main-window/main-window.html">
   <link rel="import" href="sections/login-out/logout.html">
 </head>
 <body>
 
-  <nav class="nav js-nav">
-    <header class="nav-header">
-      <div class="nav-title">User X's netdisk</div>
-      <svg class="nav-header-icon"><use xlink:href="assets/img/icons.svg#icon-electron"></use></svg>
-      <div class="nav-header-info nav-header-usr">用户名</div>
-      <div class="nav-header-info nav-header-space">
-        <span class="space-used"></span>
-        <span class="space-info">33GB/100GB</span>
-      </div>
-    </header>
-    <div class="nav-body">
-      <div class="nav-item">
-        <svg class="nav-icon icon" aria-hidden="true">
-          <use xlink:href="#icon-quanbu"></use>
-        </svg>
-        <!-- <button type="button" id="button-all-files" data-section="all-files" class="nav-button">File explorer</button> -->
-        <!-- <button type="button" id="button-upload-file" data-section="upload-file" class="nav-button">Upload file</button> -->
-        全部文件
-      </div>
-      <div class="nav-item">
-        <svg class="nav-icon icon" aria-hidden="true">
-          <use xlink:href="#icon-tupian"></use>
-        </svg>
-        图片
-      </div>
-      <div class="nav-item">
-        <svg class="nav-icon icon" aria-hidden="true">
-          <use xlink:href="#icon-wendang"></use>
-        </svg>
-        文档
-      </div>
-      <div class="nav-item">
-        <svg class="nav-icon icon" aria-hidden="true">
-          <use xlink:href="#icon-shipin"></use>
-        </svg>
-        视频
-      </div>
-      <div class="nav-item">
-        <svg class="nav-icon icon" aria-hidden="true">
-          <use xlink:href="#icon-qita"></use>
-        </svg>
-        其他
-      </div>
-      <!-- <div class="nav-item u-category-settings"> -->
-        <!-- <h5 class="nav-category"> -->
-          <!-- <svg class="nav-icon"><use xlink:href="assets/img/icons.svg#icon-menu"></use></svg> -->
-          <!-- Settings -->
-        <!-- </h5> -->
-        <!-- <button type="button" id="button-settings" data-section="settings" class="nav-button">Settings</button> -->
-      <!-- </div> -->
-    </div>
-    <footer class="nav-footer">
-      <!-- <button type="button" id="button-logout" data-modal="login" class="nav-footer-button">Login</button> -->
-      <button type="button" id="button-logout" data-modal="logout" class="demo-button">Logout</button>
-    </footer>
-  </nav>
+  <nav class="nav is-shown"></nav>
 
-  <main class="content js-content">
-    <header class="content-header">
-      <input type="text" class="search" placeholder="搜索网盘文件">
-      <button type="button" class="btn upload">
-        <svg class="icon"><use xlink:href="#icon-shangchuan1"></use></svg>
-        上传
-      </button>
-      <button type="button" class="btn download">
-        <svg class="icon"><use xlink:href="#icon-iconfontxiazai"></use></svg>
-        下载
-      </button>
-      <button type="button" class="btn new">
-        <svg class="icon"><use xlink:href="#icon-xinjian"></use></svg>
-        新建
-      </button>
-      <button type="button" class="btn more">
-        <svg class="icon"><use xlink:href="#icon-gengduo-copy"></use></svg>
-        更多
-      </button>
-    </header>
-  </main>
+  <main class="content"></main>
 
   <script>
     require('./assets/css/iconfont/iconfont.js')
     require('./assets/imports')
-    require('./assets/ex-links')
-    require('./assets/nav')
-    require('./assets/normalize-shortcuts')
+    // require('./assets/ex-links')
+    // require('./assets/nav')
+    // require('./assets/normalize-shortcuts')
   </script>
 </body>
 </html>

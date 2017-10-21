@@ -1,3 +1,4 @@
+// TODO: Remove this file
 const settings = require('electron-settings')
 
 document.body.addEventListener('click', function (event) {

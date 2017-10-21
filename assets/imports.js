@@ -6,6 +6,8 @@ Array.prototype.forEach.call(links, function (link) {
   let clone = document.importNode(template.content, true)
   if (link.href.match('login-out')) {
     document.querySelector('body').appendChild(clone)
+  } else if (link.href.match('nav')) {
+    document.querySelector('.nav').appendChild(clone)
   } else {
     document.querySelector('.content').appendChild(clone)
   }

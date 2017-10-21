@@ -7,9 +7,6 @@
   src: local('Source Code Pro'), local('SourceCodePro'), url(fonts/SourceCodePro-Regular.ttf) format('truetype');
 }
 
-
-/* [> Global ---------------------------- <] */
-
 /* * { */
   /* box-sizing: border-box; */
 /* } */
@@ -111,7 +108,6 @@
   /* padding: 0.5em; */
 /* } */
 
-
 /* [> Utilities ---------------------------- <] */
 
 /* .u-avoid-clicks { */
@@ -134,22 +130,6 @@
   /* display: none; */
 /* } */
 
-
-/* [> Content ------------------ <] */
-
-/* .content { */
-  /* flex: 1; */
-  /* position: relative; */
-  /* overflow: hidden; */
-  /* visibility: hidden; */
-  /* opacity: 0; */
-/* } */
-/* .content.is-shown { */
-  /* visibility: visible;; */
-  /* opacity: 1; */
-/* } */
-
-
 /* [> Hacks ---------------------------- <] */
 
 /* Fixes horizontal scrolling in code blocks on OS X El Cap (10.11.3), retina screen
@@ -162,6 +142,8 @@
 /* .hljs:active { */
   /* outline: 1px solid transparent; */
 /* } */
+
+/* Global ---------------------------- */
 
 html {
   height: 100%;
@@ -181,5 +163,28 @@ body {
   vertical-align: -0.15em;
   fill: currentColor;
   overflow: hidden;
+}
+
+/* Content ------------------ */
+
+.content {
+  position: absolute;
+  top: 0px;
+  left: 256px;
+  width: 1024px;
+  height: 100%;
+  background: #F9F9F9;
+  /* overflow: hidden; */
+  /* visibility: hidden; */
+  /* opacity: 0; */
+}
+.content.is-shown {
+  visibility: visible;;
+  opacity: 1;
+}
+
+.content .content-header {
+  height: 162px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
