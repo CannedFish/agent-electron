@@ -2,12 +2,12 @@
   position: absolute;
   top: 110px;
   left: 40px;
-  width: 308px;
+  width: 296px;
   height: 25px;
   background: #FFFFFF;
   border: 1px solid #CDCDCD;
   border-radius: 24px;
-  padding: 3px 0px 0px 12px;
+  padding: 3px 12px 0px 12px;
   font-size: 14px;
   color: #999999;
   outline: none;
@@ -15,6 +15,24 @@
 .content .content-header .search:focus,
 .content .content-header .search:hover {
   border: 1px solid #509ED1;
+}
+
+.content .content-header .search-btn {
+  position: absolute;
+  left: 330px;
+  top: 115px;
+  border: none;
+  outline: none;
+  background: #FFFFFF;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+.content .content-header .search-btn:active {
+  left: 331px;
+  top: 115px;
+  width: 17px;
+  height: 17px;
 }
 
 .content .content-header .btn {
@@ -53,5 +71,54 @@
 }
 .content .content-header .btn.more {
   left: 720px;
+}
+
+.content .content-header .toggle {
+  position: absolute;
+  left: 839px;
+  top: 50px;
+  width: 148px;
+  height: 30px;
+  border: none;
+  border-radius: 24px;
+  background: #509ED1;
+  font-size: 14px;
+  color: #FFFFFF;
+  outline: none;
+}
+.content .content-header .toggle:active {
+  text-shadow: 0 0 0.2em #FFF, -0 -0 0.2em #FFF;
+  left: 840px;
+  top: 51px;
+  width: 146px;
+  height: 28px;
+}
+
+.content .content-body .file-icon {
+  float: left;
+  width: 68px;
+  height: 84px;
+  margin: 0px 14px 0px 14px;
+  padding: 12px 14px 0px 14px;
+  text-align: center;
+  border: 2px solid #F9F9F9;
+  border-radius: 8px;
+}
+.content .content-body .file-icon:hover,
+.content .content-body .file-icon:focus {
+  border: 2px solid rgba(80, 158, 209, 0.2);
+}
+
+.content .content-body .file-icon .icon-img {
+  width: inherit;
+  height: 59px;
+}
+.content .content-body .file-icon .icon-txt {
+  /* position: relative; */
+  /* top: 6px; */
+  width: inherit; 
+  height: 20px;
+  font-size: 14px;
+  color: #666666;
 }
 

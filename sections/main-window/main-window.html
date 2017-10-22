@@ -2,6 +2,9 @@
   <section id="main-window" class="section">
     <header class="content-header">
       <input id="main-file-search" type="text" class="search" placeholder="搜索网盘文件">
+      <button id="search-button" type="button" class="search-btn">
+        <svg class="icon"><use xlink:href="#icon-sousuo"></use></svg>
+      </button>
       <button id="main-file-upload" type="button" class="btn upload">
         <svg class="icon"><use xlink:href="#icon-shangchuan1"></use></svg>
         上传
@@ -18,7 +21,57 @@
         <svg class="icon"><use xlink:href="#icon-gengduo-copy"></use></svg>
         更多
       </button>
+      <button id="trans-list" type="button" class="toggle">
+        <svg class="icon"><use xlink:href="#icon-shangchuanliebiao"></use></svg>
+        上传列表
+      </button>
     </header>
+    <div class="content-body">
+      <div class="file-icon">
+        <svg class="icon icon-img"><use xlink:href="#icon-wenjianjia"></use></svg>
+        <span class="icon-txt">文件名</span>
+      </div>
+      <div class="file-icon">
+        <svg class="icon icon-img"><use xlink:href="#icon-wenjianjia"></use></svg>
+        <span class="icon-txt">文件名</span>
+      </div>
+      <div class="file-icon">
+        <svg class="icon icon-img"><use xlink:href="#icon-wenjianjia"></use></svg>
+        <span class="icon-txt">文件名</span>
+      </div>
+      <div class="file-icon">
+        <svg class="icon icon-img"><use xlink:href="#icon-wenjianjia"></use></svg>
+        <span class="icon-txt">文件名</span>
+      </div>
+      <div class="file-icon">
+        <svg class="icon icon-img"><use xlink:href="#icon-wenjianjia"></use></svg>
+        <span class="icon-txt">文件名</span>
+      </div>
+      <div class="file-icon">
+        <svg class="icon icon-img"><use xlink:href="#icon-wenjianjia"></use></svg>
+        <span class="icon-txt">文件名</span>
+      </div>
+      <div class="file-icon">
+        <svg class="icon icon-img"><use xlink:href="#icon-wenjianjia"></use></svg>
+        <span class="icon-txt">文件名</span>
+      </div>
+      <div class="file-icon">
+        <svg class="icon icon-img"><use xlink:href="#icon-wenjianjia"></use></svg>
+        <span class="icon-txt">文件名</span>
+      </div>
+      <div class="file-icon">
+        <svg class="icon icon-img"><use xlink:href="#icon-wenjianjia"></use></svg>
+        <span class="icon-txt">文件名</span>
+      </div>
+      <div class="file-icon">
+        <svg class="icon icon-img"><use xlink:href="#icon-wenjianjia"></use></svg>
+        <span class="icon-txt">文件名</span>
+      </div>
+      <div class="file-icon">
+        <svg class="icon icon-img"><use xlink:href="#icon-shangchuan"></use></svg>
+        <span class="icon-txt">上传文件</span>
+      </div>
+    </div>
 
     <script>
       require('./renderer-process/main-window/main-window.js')

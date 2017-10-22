@@ -174,9 +174,10 @@ body {
   width: 1024px;
   height: 100%;
   background: #F9F9F9;
-  /* overflow: hidden; */
   /* visibility: hidden; */
   /* opacity: 0; */
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 .content.is-shown {
   visibility: visible;;
@@ -186,5 +187,13 @@ body {
 .content .content-header {
   height: 162px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.content .content-body {
+  position: absolute;
+  top: 163px;
+  width: 1014px;
+  height: 687px;
+  padding-left: 10px;
 }
 
