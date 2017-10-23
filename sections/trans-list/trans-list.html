@@ -1,0 +1,16 @@
+<template class="task-template">
+  <section id="trans-list" class="section">
+    <header class="content-header">
+      <button id="uploading" type="button" class="trans-list-tab uploading">正在上传</button>
+      <button id="downloading" type="button" class="trans-list-tab downloading">正在下载</button>
+      <button id="completed" type="button" class="trans-list-tab completed">传输完成</button>
+      <button id="to-main-window" type="button" class="toggle">我的网盘</button>
+    </header>
+    <div class="content-body">
+    </div>
+
+    <script>
+      require('./renderer-process/trans-list/trans-list.js')
+    </script>
+  </section>
+</template>

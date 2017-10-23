@@ -1,0 +1,26 @@
+.trans-list-tab {
+  width: 120px;
+  height: 36px;
+  position: absolute;
+  top: 100px;
+  border: 1px solid #999;
+  border-radius: 8px;
+  opacity: 0.6;
+  font-size: 18px;
+  color: #999;
+  background: #F9F9F9;
+}
+.trans-list-tab:focus {
+  color: #F9F9F9;
+  background: #999;
+}
+
+.trans-list-tab.uploading {
+  left: 40px;
+}
+.trans-list-tab.downloading {
+  left: 280px;
+}
+.trans-list-tab.completed {
+  left: 520px;
+}
