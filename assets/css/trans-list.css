@@ -1,4 +1,4 @@
-.trans-list-tab {
+.trans-list-tab-btn {
   width: 120px;
   height: 36px;
   top: 100px;
@@ -11,27 +11,35 @@
   outline: none;
   cursor: pointer;
 }
-.trans-list-tab.is-selected {
+.trans-list-tab-btn.is-selected {
   color: #F9F9F9;
   background: #999;
 }
 
-.trans-list-tab.uploading {
+.trans-list-tab-btn.uploading {
   position: absolute;
   left: 40px;
 }
-.trans-list-tab.downloading {
+.trans-list-tab-btn.downloading {
   position: absolute;
   left: 280px;
 }
-.trans-list-tab.completed {
+.trans-list-tab-btn.completed {
   position: absolute;
   left: 520px;
 }
 
-.trans-list-clear {
+.trans-list-tab {
   position: absolute;
-  left: 861px;
+  visibility: hidden;
+  opacity: 0;
+}
+.trans-list-tab.is-shown {
+  visibility: visible;
+  opacity: 1;
+}
+
+.ctrl-btn {
   top: 127px;
   background: #509ED1;
   border-radius: 5px 5px 0px 0px;
@@ -41,13 +49,30 @@
   color: #FFF;
   outline: none;
   border: 1px solid #509ED1;
+  visibility: hidden;
+  opacity: 0;
 }
-.trans-list-clear:active {
+.ctrl-btn:active {
   text-shadow: 0 0 0.2em #FFF, -0 -0 0.2em #FFF;
   left: 862px;
   top: 126px;
   width: 123px;
   height: 34px;
+}
+.ctrl-btn.is-shown {
+  visibility: visible;
+  opacity: 1;
+}
+
+.ctrl-btn.trans-list-clear,
+.ctrl-btn.trans-list-end {
+  position: absolute;
+  left: 861px;
+}
+
+.ctrl-btn.trans-list-start {
+  position: absolute;
+  left: 715px;
 }
 
 .trans-list-row {
@@ -59,11 +84,11 @@
   line-height: 62px;
   border-bottom: 1px solid #999;
 }
-.trans-list-row .file-icon {
+.trans-list-row .file-icon2 {
   display: inline-block;
   margin-left: 11px;
   width: 48px;
-  height: inherit;
+  height: 62px;
 }
 .trans-list-row .info {
   display: inline-block;
@@ -99,3 +124,65 @@
   font-size: 14px;
   color: #509ED1;
 }
+.trans-list-row .action {
+  display: inline-block;
+  font-size: 18px;
+  color: #999;
+}
+.trans-list-row .action.open {
+  margin-left: 160px;
+}
+.trans-list-row .action.between {
+  margin-left: 24px;
+}
+
+.trans-list-progress-row {
+  margin: 0px 27px 0px 27px;
+  width: 960px;
+  height: 45px;
+  vertical-align: middle;
+  line-height: 45px;
+  border-bottom: 1px solid #999;
+}
+.trans-list-progress-row .progress-icon {
+  margin-left: 41px;
+  font-size: 18px;
+  color: #509ED1;
+}
+.trans-list-progress-row .progress-title {
+  margin-left: 8px;
+  font-size: 18px;
+  color: #666;
+}
+
+.progressbar {
+  display: inline-block;
+  background: #C2C2C2;
+  border-radius: 24px;
+}
+.progressbar .done {
+  position: absolute;
+  display: inline-block;
+  background: #45CB45;
+  border-radius: 24px;
+  z-index: 1;
+}
+
+.progressbar.total{
+  margin-left: 75px;
+  width: 360px;
+  height: 20px;
+  line-height: 20px;
+}
+.progressbar.total .speed-info {
+  position: absolute;
+  margin-left: 10px;
+  font-size: 10px;
+  color: #FFF;
+  z-index: 2;
+}
+.progressbar .done.total {
+  width: 100px;
+  height: 20px;
+}
+

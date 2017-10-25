@@ -177,10 +177,10 @@ body {
   /* visibility: hidden; */
   /* opacity: 0; */
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: hidden;
 }
 .content.is-shown {
-  visibility: visible;;
+  visibility: visible;
   opacity: 1;
 }
 
@@ -195,5 +195,6 @@ body {
   width: 1014px;
   height: 687px;
   padding-left: 10px;
+  overflow-y: auto;
 }
 
