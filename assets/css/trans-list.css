@@ -112,6 +112,8 @@
   width: 79px;
   font-size: 18px;
   color: #666;
+  position: relative;
+  top: -15px;
 }
 .trans-list-row .file-type {
   display: inline-block;
@@ -119,6 +121,8 @@
   width: 94px;
   font-size: 18px;
   color: #666;
+  position: relative;
+  top: -15px;
 }
 .trans-list-row .file-type .type-icon {
   font-size: 14px;
@@ -128,12 +132,27 @@
   display: inline-block;
   font-size: 18px;
   color: #999;
+  position: relative;
+  top: -15px;
 }
 .trans-list-row .action.open {
   margin-left: 160px;
 }
 .trans-list-row .action.between {
   margin-left: 24px;
+}
+.trans-list-row .progress-info {
+  display: inline-block;
+  margin-left: 20px;
+  width: 286px;
+}
+.trans-list-row .progress-info .bar {
+  height: 16px;
+}
+.trans-list-row .progress-info .speed {
+  height: 14px;
+  font-size: 10px;
+  color: #666;
 }
 
 .trans-list-progress-row {
@@ -184,5 +203,14 @@
 .progressbar .done.total {
   width: 100px;
   height: 20px;
+}
+
+.progressbar.single {
+  width: 270px;
+  height: 16px;
+}
+.progressbar .done.single {
+  width: 100px;
+  height: 16px;
 }
 

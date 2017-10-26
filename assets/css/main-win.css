@@ -122,3 +122,55 @@
   color: #666666;
 }
 
+.upload-area {
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: inherit;
+  height: inherit;
+  border-left: 1px dashed #999;
+  border-top: 1px dashed #999;
+  background: #FFF;
+  opacity: 0;
+  visibility: hidden;
+  line-height: 500px;
+  vertical-align: middle;
+  text-align: center;
+}
+.upload-area.is-shown {
+  opacity: 0.6;
+  visibility: visible;
+}
+
+.upload-area .btn {
+  position: absolute;
+  top: 40px;
+  width: 120px;
+  height: 40px;
+  border-radius: 8px;
+  font-size: 20px;
+  outline: none;
+  border: none;
+  color: #FFF;
+  opacity: 1;
+}
+.upload-area .btn:active {
+  text-shadow: 0 0 0.2em #FFF, -0 -0 0.2em #FFF;
+  top: 39px;
+  width: 118px;
+  height: 38px;
+}
+.upload-area .btn.upload-btn {
+  left: 40px;
+  background: #509ED1;
+}
+.upload-area .btn.cancel-btn {
+  left: 192px;
+  background: #666;
+}
+
+.upload-area .tip {
+  font-size: 36px;
+  color: #666;
+}
+

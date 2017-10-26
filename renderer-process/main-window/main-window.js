@@ -8,8 +8,13 @@ const fileNewBtn = document.getElementById('main-file-new')
 const fileMoreBtn = document.getElementById('main-file-more')
 const transListToggleBtn = document.getElementById('to-trans-list')
 
+const uploadArea = document.getElementById("upload-area")
+const uploadAreaUploadBtn = document.getElementById("upload-area-upload")
+const uploadAreaCancelBtn = document.getElementById("upload-area-cancel")
+
 fileUploadBtn.addEventListener('click', (evt) => {
   console.log("upload file")
+  uploadArea.classList.add("is-shown")
 })
 
 fileDownloadBtn.addEventListener('click', (evt) => {
@@ -27,6 +32,13 @@ fileMoreBtn.addEventListener('click', (evt) => {
 transListToggleBtn.addEventListener('click', (evt) => {
   selfSection.classList.remove('is-shown')
   document.getElementById("trans-list").classList.add('is-shown')
+})
+
+uploadAreaUploadBtn.addEventListener('click', (evt) => {
+})
+
+uploadAreaCancelBtn.addEventListener('click', (evt) => {
+  uploadArea.classList.remove("is-shown")
 })
 
 selfSection.classList.add('is-shown')
