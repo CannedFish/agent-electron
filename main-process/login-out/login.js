@@ -1,10 +1,9 @@
 const path = require('path')
 const electron = require('electron')
 const BrowserWindow = electron.BrowserWindow
+const ipc = electron.ipcMain
 
 const debug = /--debug/.test(process.argv[2])
-
-const ipc = require('electron').ipcMain
 
 var loginWindow = null
 var after_login = null

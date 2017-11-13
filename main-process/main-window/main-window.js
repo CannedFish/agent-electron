@@ -1,7 +1,7 @@
 const path = require('path') 
 const electron = require('electron')
-
 const BrowserWindow = electron.BrowserWindow
+const ipc = electron.ipcMain
 
 const debug = /--debug/.test(process.argv[2])
 
@@ -26,7 +26,6 @@ function create(windowName) {
   // Launch fullscreen with DevTools open, usage: npm run debug
   if (debug) {
     mainWindow.webContents.openDevTools()
-    mainWindow.maximize()
     require('devtron').install()
   }
 
@@ -45,4 +44,9 @@ function hide() {
   mainWindow.hide()
 }
 exports.hide = hide
+
+function instance() {
+  return mainWindow
+}
+exports.instance = instance
 
