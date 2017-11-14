@@ -5,5 +5,121 @@
   padding: 20px;
 }
 
+.content-header {
+  width: 100%;
+  height: 46px;
+  line-height: 46px;
+  vertical-align: middle;
+}
 
+.content-header .file-icon {
+  width: 48px;
+  height: 42px;
+}
+
+.content-header .file-info {
+  margin-left: 8px;
+  display: inline-block;
+}
+
+.content-header .file-info .file-name {
+  font-size: 14px;
+  color: #666;
+  line-height: 20px;
+  vertical-align: middle;
+}
+
+.content-header .file-info .file-size {
+  margin-top: 4px;
+  font-size: 12px;
+  color: #999;
+  line-height: 17px;
+  vertical-align: middle;
+}
+
+.content-body {
+  width: 100%;
+}
+
+.content-body .row1 {
+  width: 100%;
+  height: 30px;
+  line-height: 30px;
+  vertical-align: middle;
+  font-size: 14px;
+  color: #999;
+}
+
+.content-body .row1 .download-path {
+  margin-left: 5px;
+  width: 280px;
+  height: 20px;
+  background: #EDEDED;
+  font-size: 12px;
+  color: #999;
+  border: none;
+  text-overflow: ellipsis;
+}
+
+.content-body .row1 .path-btn {
+  margin-left: 30px;
+  width: 68px;
+  height: 30px;
+  border-radius: 24px;
+  background: #509ED1;
+  font-size: 14px;
+  color: #FFF;
+  border: none;
+  outline: none;
+}
+.content-body .row1 .path-btn:active {
+  text-shadow: 0 0 0.2em #FFF, -0 -0 0.2em #FFF;
+  width: 66px;
+  height: 28px;
+}
+
+.content-body .row2 {
+  width: 100%;
+  height: 20px;
+  line-height: 20px;
+  vertical-align: middle;
+}
+
+.content-body .row2 .space-info {
+  margin-left: 52px;
+  font-size: 14px;
+  color: #999;
+}
+
+.content-footer {
+  width: 100%;
+  height: 24px;
+}
+
+.content-footer .btn {
+  float: right;
+  width: 46px;
+  height: 22px;
+  border-radius: 4px;
+  opacity: 0.6;
+  font-size: 14px;
+  outline: none;
+  background: #FFF;
+}
+.content-footer .btn:active {
+  text-shadow: 0 0 0.2em #FFF, -0 -0 0.2em #FFF;
+  width: 44px;
+  height: 20px;
+}
+
+.content-footer .btn.download-btn {
+  border: 1px solid #509ED1;
+  color: #509ED1;
+}
+
+.content-footer .btn.cancel-btn {
+  border: 1px solid #999;
+  color: #999;
+  margin-left: 20px;
+}
 

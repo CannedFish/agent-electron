@@ -2,6 +2,7 @@ const path = require('path')
 const electron = require('electron')
 const BrowserWindow = electron.BrowserWindow
 const ipc = electron.ipcMain
+const dialog = electron.dialog
 
 const debug = /--debug/.test(process.argv[2])
 
@@ -38,5 +39,15 @@ function instance() {
 
 ipc.on('download-show', (evt) => {
   instance().show()
+}).on('download-cancel', (evt) => {
+  downloadWindow.close()
+}).on('download-path', (evt) => {
+  dialog.showOpenDialog({
+    properties: ['openDirectory'],
+    title: "请选择下载路径"
+  }, (download_path) => {
+    console.log(download_path)
+    evt.sender.send('download-path-reply', download_path[0])
+  })
 })
 
