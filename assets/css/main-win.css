@@ -104,9 +104,11 @@
   border: 2px solid #F9F9F9;
   border-radius: 8px;
 }
-.content .content-body .file-icon:hover,
-.content .content-body .file-icon:focus {
+.content .content-body .file-icon:hover {
   border: 2px solid rgba(80, 158, 209, 0.2);
+}
+.content .content-body .file-icon:focus {
+  background: rgba(80, 158, 209, 0.2);
 }
 
 .content .content-body .file-icon .icon-img {

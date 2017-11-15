@@ -12,6 +12,9 @@ const uploadArea = document.getElementById("upload-area")
 const uploadAreaUploadBtn = document.getElementById("upload-area-upload")
 const uploadAreaCancelBtn = document.getElementById("upload-area-cancel")
 
+const FileIcon = require(__dirname + '/file-icon')
+const fileExplore = document.getElementById('file-explore')
+
 fileUploadBtn.addEventListener('click', (evt) => {
   console.log("upload file")
   uploadArea.classList.add("is-shown")
@@ -43,4 +46,13 @@ uploadAreaCancelBtn.addEventListener('click', (evt) => {
 })
 
 selfSection.classList.add('is-shown')
+
+ipc.on('get-files-reply', (evt, files) => {
+  files.map((filename) => {
+    let fileIcon = new FileIcon(1, filename, fileExplore)
+    fileIcon.show()
+  })
+})
+
+ipc.send('get-files', '.')
 

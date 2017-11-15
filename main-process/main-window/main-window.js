@@ -50,3 +50,8 @@ function instance() {
 }
 exports.instance = instance
 
+ipc.on('get-files', (evt, cur) => {
+  if(cur == '.') {
+    evt.sender.send('get-files-reply', ['文档1', '文档2', '文档3'])
+  }
+})
