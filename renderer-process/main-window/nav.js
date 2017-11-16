@@ -1,5 +1,6 @@
 const ipc = require('electron').ipcRenderer
 
+// nav buttons
 const selfSection = document.getElementById('nav-section')
 const navAllFilesBtn = document.getElementById('nav-all')
 const navPicBtn = document.getElementById('nav-pic')
@@ -38,4 +39,14 @@ navOtherBtn.addEventListener('click', (evt) => {
 
 selfSection.classList.add('is-shown')
 navAllFilesBtn.click()
+
+// space info
+const spaceUsed = selfSection.querySelector('.space-used')
+const spaceInfo = selfSection.querySelector('.space-info')
+
+function updateSpaceInfo() {
+  // TODO: call api to get info include (total, used)
+  // spaceUsed.style.width = Math.round(used/total*100)
+  // spaceInfo.innerHTML = "{0}GB/{1}GB".format(used, total)
+}
 
