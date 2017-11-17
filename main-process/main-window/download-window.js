@@ -17,6 +17,7 @@ function instance() {
       height: 180,
       parent: mainWin,
       modal: true,
+      autoHideMenuBar: true,
       show: false,
       minimizable: false,
       maximizable: false,
