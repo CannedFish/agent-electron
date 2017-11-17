@@ -1,5 +1,7 @@
 const ipc = require('electron').ipcRenderer
 
+const TransListRow = require(__dirname + '/file-trans-list').TransListRow
+
 const selfSection = document.getElementById('trans-list')
 const mainWindowToggleBtn = document.getElementById('to-main-window')
 
@@ -41,6 +43,13 @@ uploadingTabBtn.addEventListener('click', (evt) => {
   uploadingTab.classList.add("is-shown")
   startAllBtn.classList.add("is-shown")
   endAllBtn.classList.add("is-shown")
+
+  let tlr = new TransListRow(uploadingTab, {
+    'type': 1,
+    'name': '恒泰云-值得信赖.png',
+    'size': '3.37MB'
+  })
+  tlr.show()
 })
 
 downloadingTabBtn.addEventListener('click', (evt) => {
@@ -49,6 +58,13 @@ downloadingTabBtn.addEventListener('click', (evt) => {
   downloadingTab.classList.add("is-shown")
   startAllBtn.classList.add("is-shown")
   endAllBtn.classList.add("is-shown")
+
+  let tlr = new TransListRow(uploadingTab, {
+    'type': 1,
+    'name': '恒泰云-值得信赖.png',
+    'size': '3.37MB'
+  })
+  tlr.show()
 })
 
 completedTabBtn.addEventListener('click', (evt) => {
@@ -60,3 +76,8 @@ completedTabBtn.addEventListener('click', (evt) => {
 
 uploadingTabBtn.click()
 
+module.exports = {
+  'addUploadRow': '',
+  'addDownloadRow': '',
+  'addCompletedRow': ''
+}
