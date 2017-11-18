@@ -1,6 +1,7 @@
 const ipc = require('electron').ipcRenderer
 
-const TransListRow = require(__dirname + '/file-trans-list').TransListRow
+const TransListRow = require(__dirname + '/trans-list-row').TransListRow
+const CompletedRow = require(__dirname + '/trans-list-row').CompletedRow
 
 const selfSection = document.getElementById('trans-list')
 const mainWindowToggleBtn = document.getElementById('to-main-window')
@@ -20,11 +21,6 @@ const endAllBtn = document.getElementById("trans-list-end")
 const clearAllBtn = document.getElementById("trans-list-clear")
 const ctrlBtns = [startAllBtn, endAllBtn, clearAllBtn]
 
-mainWindowToggleBtn.addEventListener('click', (evt) => {
-  selfSection.classList.remove('is-shown')
-  document.getElementById('main-window').classList.add('is-shown')
-})
-
 function unselectedAllTab() {
   tabList.map((tab) => {
     tab.classList.remove("is-shown")
@@ -37,44 +33,60 @@ function unselectedAllTab() {
   })
 }
 
-uploadingTabBtn.addEventListener('click', (evt) => {
-  unselectedAllTab()
-  uploadingTabBtn.classList.add("is-selected")
-  uploadingTab.classList.add("is-shown")
-  startAllBtn.classList.add("is-shown")
-  endAllBtn.classList.add("is-shown")
-
-  let tlr = new TransListRow(uploadingTab, {
-    'type': 1,
-    'name': '恒泰云-值得信赖.png',
-    'size': '3.37MB'
+(function main() {
+  mainWindowToggleBtn.addEventListener('click', (evt) => {
+    selfSection.classList.remove('is-shown')
+    document.getElementById('main-window').classList.add('is-shown')
   })
-  tlr.show()
-})
 
-downloadingTabBtn.addEventListener('click', (evt) => {
-  unselectedAllTab()
-  downloadingTabBtn.classList.add("is-selected")
-  downloadingTab.classList.add("is-shown")
-  startAllBtn.classList.add("is-shown")
-  endAllBtn.classList.add("is-shown")
+  uploadingTabBtn.addEventListener('click', (evt) => {
+    unselectedAllTab()
+    uploadingTabBtn.classList.add("is-selected")
+    uploadingTab.classList.add("is-shown")
+    startAllBtn.classList.add("is-shown")
+    endAllBtn.classList.add("is-shown")
 
-  let tlr = new TransListRow(uploadingTab, {
-    'type': 1,
-    'name': '恒泰云-值得信赖.png',
-    'size': '3.37MB'
+    let tlr = new TransListRow(uploadingTab, {
+      'type': 1,
+      'name': '恒泰云-值得信赖.png',
+      'size': '3.37MB'
+    })
+    tlr.show()
   })
-  tlr.show()
-})
 
-completedTabBtn.addEventListener('click', (evt) => {
-  unselectedAllTab()
-  completedTabBtn.classList.add("is-selected")
-  completedTab.classList.add("is-shown")
-  clearAllBtn.classList.add("is-shown")
-})
+  downloadingTabBtn.addEventListener('click', (evt) => {
+    unselectedAllTab()
+    downloadingTabBtn.classList.add("is-selected")
+    downloadingTab.classList.add("is-shown")
+    startAllBtn.classList.add("is-shown")
+    endAllBtn.classList.add("is-shown")
 
-uploadingTabBtn.click()
+    let tlr = new TransListRow(downloadingTab, {
+      'type': 1,
+      'name': '恒泰云-值得信赖.png',
+      'size': '3.37MB'
+    })
+    tlr.show()
+  })
+
+  completedTabBtn.addEventListener('click', (evt) => {
+    unselectedAllTab()
+    completedTabBtn.classList.add("is-selected")
+    completedTab.classList.add("is-shown")
+    clearAllBtn.classList.add("is-shown")
+
+    let cr = new CompletedRow(completedTab, {
+      'type': 2,
+      'name': '恒泰云-值得信赖.png',
+      'size': '3.37MB',
+      'date': '17-08-12',
+      'completeType': 1
+    })
+    cr.show()
+  })
+
+  uploadingTabBtn.click()
+})()
 
 module.exports = {
   'addUploadRow': '',

@@ -134,6 +134,7 @@
   color: #999;
   position: relative;
   top: -15px;
+  cursor: pointer;
 }
 .trans-list-row .action.open {
   margin-left: 160px;

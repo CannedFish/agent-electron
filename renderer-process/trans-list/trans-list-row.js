@@ -1,6 +1,6 @@
 const ipc = require('electron').ipcRenderer
 
-const transListRowLink = document.getElementById('trans-list-row')
+const transListRowLink = document.getElementById('trans-list-row-template')
 const transListRowTemplate = transListRowLink.import.querySelector('.task-template')
 
 const iconString = [
@@ -17,6 +17,13 @@ const GB = MB*1024
 class TransListRow {
 
   constructor(parentNode, info) {
+    /* @param
+     *  parentNode: node object of this row's parent
+     *  info:
+     *    type: int, file type, 0 => dir, 1 => doc, 2 => pic, 3 => video;
+     *    name: string, file name;
+     *    size: string, file size;
+     * */
     this._obj = document.importNode(transListRowTemplate.content, true).firstElementChild
     this._parent = parentNode
     this._info = info
@@ -68,5 +75,42 @@ class TransListRow {
     // TODO: open local file directory
   }
 }
-
 exports.TransListRow = TransListRow
+
+const completedRowLink = document.getElementById('completed-row-template')
+const completedRowTemplate = completedRowLink.import.querySelector('.task-template')
+
+const CompletedType = [
+  '<span class="type-icon iconfont icon-shangchuan1"></span>上传完成',
+  '<span class="type-icon iconfont icon-iconfontxiazai"></span>下载完成'
+]
+
+class CompletedRow {
+
+  constructor(parentNode, info) {
+    /* @param
+     *  parentNode: node object of this row's parent
+     *  info:
+     *    type: int, file type, 0 => dir, 1 => doc, 2 => pic, 3 => video;
+     *    name: string, file name;
+     *    size: string, file size;
+     *    date: string, completed date, yy-mm-dd;
+     *    completeType: int, 0 => upload, 1 => download;
+     * */
+    this._obj = document.importNode(completedRowTemplate.content, true).firstElementChild
+    this._parent = parentNode
+    this._info = info
+  }
+
+  show() {
+    this._obj.querySelector('.file-icon2').innerHTML = iconString[this._info.type]
+    this._obj.querySelector('.file-name').innerHTML = this._info.name
+    this._obj.querySelector('.file-size').innerHTML = this._info.size
+    this._obj.querySelector('.file-date').innerHTML = this._info.date
+    this._obj.querySelector('.file-type').innerHTML = CompletedType[this._info.completeType]
+
+    this._parent.appendChild(this._obj)
+  }
+}
+exports.CompletedRow = CompletedRow
+
