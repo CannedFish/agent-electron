@@ -48,6 +48,17 @@
   top: 144px;
 }
 
+.login-forgot {
+  position: absolute;
+  left: 300px;
+  top: 157px;
+  width: 70px;
+  height: 20px;
+  font-size: 14px;
+  color: #666;
+  cursor: pointer;
+}
+
 .login-checkbox {
   width: 16px;
   height: 16px;
@@ -65,7 +76,7 @@
 }
 
 .login-checkbox-tip {
-  width: 56px;
+  width: 60px;
   height: 20px;
   font-size: 14px;
   color: #666666;

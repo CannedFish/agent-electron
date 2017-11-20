@@ -89,7 +89,30 @@ function unselectedAllTab() {
 })()
 
 module.exports = {
-  'addUploadRow': '',
-  'addDownloadRow': '',
-  'addCompletedRow': ''
+  'addUploadRow': function(file_type, file_name, file_size) {
+    let tlr = new TransListRow(uploadingTab, {
+      'type': file_type,
+      'name': file_name,
+      'size': file_size
+    })
+    tlr.show()
+  },
+  'addDownloadRow': function(file_type, file_name, file_size) {
+    let tlr = new TransListRow(downloadingTab, {
+      'type': file_type,
+      'name': file_name,
+      'size': file_size
+    })
+    tlr.show()
+  },
+  'addCompletedRow': function(file_type, file_name, file_size, file_date, file_completeType) {
+    let cr = new CompletedRow(completedTab, {
+      'type': file_type,
+      'name': file_name,
+      'size': file_size,
+      'date': file_date,
+      'completeType': file_completeType
+    })
+    cr.show()
+  }
 }

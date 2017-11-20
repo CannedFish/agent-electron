@@ -24,10 +24,6 @@ ipc.on('login-reply', function (event, arg) {
     //       and create main window
     usrInput.value = ''
     pwdInput.value = ''
-
-    // loginModal.classList.remove('is-shown')
-    // showMainContent()
-    // allFilesBtn.click()
   }
 })
 

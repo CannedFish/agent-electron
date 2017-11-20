@@ -2,6 +2,9 @@ const path = require('path')
 const electron = require('electron')
 const BrowserWindow = electron.BrowserWindow
 const ipc = electron.ipcMain
+const sqlite3 = require('sqlite3').verbose()
+
+const config = require(__dirname + '../../config.js')
 
 const debug = /--debug/.test(process.argv[2])
 
@@ -24,6 +27,9 @@ ipc.on('login', function(event, arg) {
 })
 
 function login(usr, pwd) {
+  // TODO:
+  //   1. Get auth_url and tenant_name from sqlite3
+  //   2. post /api/authenticate to get token
   return true
 }
 exports.login = login
