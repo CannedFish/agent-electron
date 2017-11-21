@@ -20,15 +20,16 @@
     "windows-store": "node ./script/windows-store.js",
     "release": "node ./script/release.js",
     "prepack": "check-for-leaks",
-    "prepush": "check-for-leaks"
+    "prepush": "check-for-leaks",
+    "postinstall": "cd node_modules/sqlite3 && npm install nan && node-gyp configure --module_name=node_sqlite3 --module_path=../lib/binding/electron-v1.6-win32-x64 && node-gyp rebuild --target=1.6.2 --arch=x64 --target_platform=win32 --dist-url=https://atom.io/download/atom-shell --module_name=node_sqlite3 --module_path=../lib/binding/electron-v1.6-win32-x64"
   },
-  "repository": "https://github.com/electron/electron-api-demos",
+  "repository": "https://github.com/CannedFish/agent-electron",
   "keywords": [
     "Electron",
     "Agent",
     "client"
   ],
-  "author": "GitHub",
+  "author": "CannedFish",
   "license": "MIT",
   "devDependencies": {
     "chai": "^3.4.1",
@@ -50,6 +51,7 @@
   "dependencies": {
     "electron-settings": "^3.0.7",
     "electron-shortcut-normalizer": "^1.0.0",
+    "electron-rebuild": "^1.5.7",
     "glob": "^7.1.0",
     "highlight.js": "^9.3.0",
     "sqlite3": "^3.1.13"
