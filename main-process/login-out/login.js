@@ -2,13 +2,17 @@ const path = require('path')
 const electron = require('electron')
 const BrowserWindow = electron.BrowserWindow
 const ipc = electron.ipcMain
+const settings = require('electron-settings')
 
-const common = require(__dirname + '/../../common.js')
+// const common = require(__dirname + '/../../common.js')
 
 const debug = /--debug/.test(process.argv[2])
 
 var loginWindow = null
 var after_login = null
+
+let repwd = settings.get('remember-password', false)
+let autologin = settings.get('auto-login', false)
 
 ipc.on('login', function(event, arg) {
   console.log('login info:', arg)
@@ -17,21 +21,33 @@ ipc.on('login', function(event, arg) {
       event.sender.send('login-reply', 'failed with some reason')
     } else {
       event.sender.send('login-reply', null)
+      if(repwd) {
+        settings.set('remember-password', repwd)
+        settings.set('username', usr)
+        settings.set('password', pwd)
+      }
+      if(autologin) {
+        settings.set('auto-login', autologin)
+      }
       loginWindow.hide()
       after_login(null, loginWindow)
     }
   })
 }).on('re-usr', (event, arg) => {
-  // TODO: handle the event of remember username
+  // handle the event of remember username
+  repwd = arg
 }).on('auto-login', (event, arg) => {
-  // TODO: handle the event of auto login
+  // handle the event of auto login
+  autologin = arg
+}).on('checkbox-state', (evt) => {
+  evt.sender.send('checkbox-state-reply', isRemember(), isAutoLogin())
 })
 
 function login(usr, pwd, callback) {
   // TODO:
   //   1. Get auth_url and tenant_name from sqlite3
   //   2. post /api/authenticate to get token
-  common.getTenantInfo((err, auth_url, tenant_name) {
+  common.getTenantInfo((err, auth_url, tenant_name) => {
     if(err) {
       return callback(err)
     }
@@ -49,14 +65,14 @@ function isLogin() {
 exports.isLogin = isLogin
 
 function isRemember() {
-  return true
+  return repwd
 }
-exports.isRemember = isRemember
+// exports.isRemember = isRemember
 
 function isAutoLogin() {
-  return true
+  return autologin
 }
-exports.isAutoLogin = isAutoLogin
+// exports.isAutoLogin = isAutoLogin
 
 function create(win_title, callback) {
   after_login = callback

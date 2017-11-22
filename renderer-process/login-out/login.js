@@ -7,6 +7,19 @@ const loginBtn = document.getElementById('login')
 const usrInput = document.getElementById('username')
 const pwdInput = document.getElementById('password')
 
+const repwdCheckbox = document.querySelector('.repwd')
+const autologinCheckbox = document.querySelector('.autologin')
+
+const Checkbox = [
+  '<svg class="icon" aria-hidden="true"><use xlink:href="#icon-duoxuan"></svg>',
+  '<svg class="icon" aria-hidden="true"><use xlink:href="#icon-xuankuang"></svg>'
+]
+
+let repwd = false
+let autologin = false
+
+ipc.send('checkbox-state')
+
 loginBtn.addEventListener('click', function () {
   if (usrInput.value === '' || pwdInput.value === '') {
     alert("Username or Password is None!")
@@ -16,7 +29,7 @@ loginBtn.addEventListener('click', function () {
   }
 })
 
-ipc.on('login-reply', function (event, arg) {
+ipc.on('login-reply', (event, arg) => {
   if (arg != null) {
     alert("Username or Password is invalid!")
   } else {
@@ -25,6 +38,40 @@ ipc.on('login-reply', function (event, arg) {
     usrInput.value = ''
     pwdInput.value = ''
   }
+}).on('checkbox-state-reply', (evt, repwd_, autologin_) => {
+  repwd = !repwd_
+  repwdCheckbox.click()
+
+  autologin = !autologin_
+  autologinCheckbox.click()
+})
+
+repwdCheckbox.addEventListener('click', (evt) => {
+  if(repwd) {
+    repwdCheckbox.innerHTML = Checkbox[1]
+    repwd = false
+    if(autologin) {
+      autologinCheckbox.click()
+    }
+  } else {
+    repwdCheckbox.innerHTML = Checkbox[0]
+    repwd = true
+  }
+  ipc.send('re-usr', repwd)
+})
+
+autologinCheckbox.addEventListener('click', (evt) => {
+  if(autologin) {
+    autologinCheckbox.innerHTML = Checkbox[1]
+    autologin = false
+  } else {
+    autologinCheckbox.innerHTML = Checkbox[0]
+    autologin = true
+    if(!repwd) {
+      repwdCheckbox.click()
+    }
+  }
+  ipc.send('auto-login', autologin)
 })
 
 function showMainContent () {
