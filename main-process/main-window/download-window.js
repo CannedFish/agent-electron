@@ -7,6 +7,7 @@ const dialog = electron.dialog
 const debug = /--debug/.test(process.argv[2])
 
 const mainWin = require(path.join(__dirname, 'main-window.js')).instance()
+const common = require(path.join(__dirname, '../../common.js'))
 
 var downloadWindow = null
 
@@ -40,6 +41,7 @@ function instance() {
 
 ipc.on('download-show', (evt) => {
   instance().show()
+  evt.sender.send('download-show-reply') // TODO: filename, filetype, filesize
 }).on('download-cancel', (evt) => {
   downloadWindow.close()
 }).on('download-path', (evt) => {
@@ -50,5 +52,7 @@ ipc.on('download-show', (evt) => {
     console.log(download_path)
     evt.sender.send('download-path-reply', download_path[0])
   })
+}).on('download', (evt) => {
+  // TODO: do download action
 })
 

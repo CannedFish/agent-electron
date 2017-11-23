@@ -11,13 +11,16 @@ pathBtn.addEventListener('click', (evt) => {
 })
 
 downloadBtn.addEventListener('click', (evt) => {
+  ipc.send('download')
 })
 
 cancelBtn.addEventListener('click', (evt) => {
   ipc.send('download-cancel')
 })
 
-ipc.on('download-path-reply', (evt, path) => {
+ipc.on('download-show-reply', (evt, filename, filetype, filesize) => {
+  // TODO: change file infomation
+}).on('download-path-reply', (evt, path) => {
   console.log(path)
   downloadPath.value = path
   downloadPath.title = path

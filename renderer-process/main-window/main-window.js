@@ -22,7 +22,7 @@ fileUploadBtn.addEventListener('click', (evt) => {
 
 fileDownloadBtn.addEventListener('click', (evt) => {
   console.log("download file")
-  ipc.send('download-show')
+  ipc.send('download-show') // TODO: filename, filetype, filesize
 })
 
 fileNewBtn.addEventListener('click', (evt) => {

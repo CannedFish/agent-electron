@@ -1,8 +1,17 @@
 const config = require(__dirname + '/config.js')
-const sqlite3 = require('sqlite3').verbose()
-const net = require('net')
+if(!config.offline_debug) {
+  const net = require('net')
+  const sqlite3 = require('sqlite3').verbose()
+}
 
 function getTenantInfo(callback) {
+  if(config.offline_debug) {
+    setTimeout(() => {
+      callback(null, 'http://127.0.0.1:5000/auth', 'dongdong')
+    }, 3000)
+    return 
+  }
+
   let db = new sqlite3.Database(config.db_file_path)
 
   db.get('select auth_url, tenant_name from info', (err, row) => {
@@ -26,6 +35,18 @@ var info = {
 }
 // REST APIs
 function authenticate(usr, pwd, auth_url, tenant_name, callback) {
+  if(config.offline_debug) {
+    info.token = 'abcd-efgh-ijkl-mnop'
+    info.usr = usr
+    info.pwd = pwd
+    info.auth_url = auth_url
+    info.tenant_name = tenant_name
+    setTimeout(() => {
+      callback(null, info.token)
+    }, 3000)
+    return 
+  }
+
   httpCall('POST', '/api/authenticate', (err, ret) => {
     if(err) {
       return callback(err)

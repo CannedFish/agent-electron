@@ -86,33 +86,50 @@ function unselectedAllTab() {
   })
 
   uploadingTabBtn.click()
+
+  ipc.on('upload-reply', (evt, filename, filetype, filesize) => {
+    // add a row in upload tab
+    addUploadRow(filetype, filename, filesize)
+  }).on('download-reply', (evt, filename, filetype, filesize) => {
+    // add a row in download tab
+    addDownloadRow(filetype, filename, filesize)
+  }).on('compeleted-reply', (evt, filename, filetype, filesize, date, completetype) => {
+    // add a row in completed tab
+    addCompletedRow(filetype, filename, filesize, date, completetype)
+  })
 })()
 
+function addUploadRow(file_type, file_name, file_size) {
+  let tlr = new TransListRow(uploadingTab, {
+    'type': file_type,
+    'name': file_name,
+    'size': file_size
+  })
+  tlr.show()
+}
+
+function addDownloadRow(file_type, file_name, file_size) {
+  let tlr = new TransListRow(downloadingTab, {
+    'type': file_type,
+    'name': file_name,
+    'size': file_size
+  })
+  tlr.show()
+}
+
+function addCompletedRow(file_type, file_name, file_size, file_date, file_completeType) {
+  let cr = new CompletedRow(completedTab, {
+    'type': file_type,
+    'name': file_name,
+    'size': file_size,
+    'date': file_date,
+    'completeType': file_completeType
+  })
+  cr.show()
+}
+
 module.exports = {
-  'addUploadRow': function(file_type, file_name, file_size) {
-    let tlr = new TransListRow(uploadingTab, {
-      'type': file_type,
-      'name': file_name,
-      'size': file_size
-    })
-    tlr.show()
-  },
-  'addDownloadRow': function(file_type, file_name, file_size) {
-    let tlr = new TransListRow(downloadingTab, {
-      'type': file_type,
-      'name': file_name,
-      'size': file_size
-    })
-    tlr.show()
-  },
-  'addCompletedRow': function(file_type, file_name, file_size, file_date, file_completeType) {
-    let cr = new CompletedRow(completedTab, {
-      'type': file_type,
-      'name': file_name,
-      'size': file_size,
-      'date': file_date,
-      'completeType': file_completeType
-    })
-    cr.show()
-  }
+  'addUploadRow': addUploadRow,
+  'addDownloadRow': addDownloadRow,
+  'addCompletedRow': addCompletedRow
 }
