@@ -4,7 +4,7 @@ const BrowserWindow = electron.BrowserWindow
 const ipc = electron.ipcMain
 const settings = require('electron-settings')
 
-// const common = require(__dirname + '/../../common.js')
+const common = require(__dirname + '/../../common.js')
 
 const debug = /--debug/.test(process.argv[2])
 
@@ -16,7 +16,8 @@ let autologin = settings.get('auto-login', false)
 
 ipc.on('login', function(event, arg) {
   console.log('login info:', arg)
-  login((err) => {
+  info = arg.split('#')
+  login(info[0], info[1], (err) => {
     if(err) {
       event.sender.send('login-reply', 'failed with some reason')
     } else {
@@ -44,16 +45,16 @@ ipc.on('login', function(event, arg) {
 })
 
 function login(usr, pwd, callback) {
-  // TODO:
-  //   1. Get auth_url and tenant_name from sqlite3
-  //   2. post /api/authenticate to get token
+  // 1. Get auth_url and tenant_name from sqlite3
+  // 2. post /api/authenticate to get token
   common.getTenantInfo((err, auth_url, tenant_name) => {
     if(err) {
       return callback(err)
     }
+    let cb = callback
     common.authenticate(usr, pwd, auth_url, tenant_name, (err, token) => {
       console.log('auth_token:', token)
-      return callback(err)
+      return cb(err)
     })
   })
 }

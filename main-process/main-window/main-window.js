@@ -3,6 +3,8 @@ const electron = require('electron')
 const BrowserWindow = electron.BrowserWindow
 const ipc = electron.ipcMain
 
+const common = require(path.join(__dirname, '../../common.js'))
+
 const debug = /--debug/.test(process.argv[2])
 
 var mainWindow = null
@@ -50,8 +52,12 @@ function instance() {
 }
 exports.instance = instance
 
-ipc.on('get-files', (evt, cur) => {
-  if(cur == '.') {
-    evt.sender.send('get-files-reply', ['文档1', '文档2', '文档3'])
+ipc.on('get-files', (evt, cur, dir) => {
+  console.log(cur, dir)
+  if(dir) {
+    common.getContainers((err, rets) => {
+      // console.log('get containers return', rets)
+      evt.sender.send('get-files-reply', rets)
+    })
   }
 })

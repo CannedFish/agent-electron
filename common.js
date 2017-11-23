@@ -6,9 +6,9 @@ if(!config.offline_debug) {
 
 function getTenantInfo(callback) {
   if(config.offline_debug) {
-    setTimeout(() => {
-      callback(null, 'http://127.0.0.1:5000/auth', 'dongdong')
-    }, 3000)
+    setTimeout((cb) => {
+      cb(null, 'http://127.0.0.1:5000/auth', 'dongdong')
+    }, 3000, callback)
     return 
   }
 
@@ -41,9 +41,9 @@ function authenticate(usr, pwd, auth_url, tenant_name, callback) {
     info.pwd = pwd
     info.auth_url = auth_url
     info.tenant_name = tenant_name
-    setTimeout(() => {
-      callback(null, info.token)
-    }, 3000)
+    setTimeout((cb) => {
+      cb(null, info.token)
+    }, 3000, callback)
     return 
   }
 
@@ -62,6 +62,17 @@ function authenticate(usr, pwd, auth_url, tenant_name, callback) {
 exports.authenticate = authenticate
 
 function getContainers(callback) {
+  if(config.offline_debug) {
+    setTimeout((cb) => {
+      cb(null, [
+        {name: '文件夹1', type: 0},
+        {name: '文档2', type: 1},
+        {name: '文档3', type: 1}
+      ])
+    }, 3000, callback)
+    return 
+  }
+
   if(!info.token) {
     return callback('Please authenticate first')
   }
@@ -69,10 +80,15 @@ function getContainers(callback) {
     , '/api/containers?preauthtoken={0}&preauthurl={1}&user={2}&tenant_name={3}'.format(info.token, info.auth_url, info.usr, info.tenant_name)
     , (err, ret) => {
       if(err) {
-        return callback(err)
+        if(ret.errcode == 1) {
+          return callback(null, ret.results)
+        } else {
+          return callback(ret.msg)
+        }
       }
   })
 }
+exports.getContainers = getContainers
 
 function getObjects(containerName) {
   if(!info.token) {

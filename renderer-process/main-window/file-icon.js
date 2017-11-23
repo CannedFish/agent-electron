@@ -13,7 +13,7 @@ const iconString = [
 class FileIcon {
 
   constructor(type, name, parentNode) {
-    this._obj = document.importNode(fileIconTemplate.content, true)
+    this._obj = document.importNode(fileIconTemplate.content, true).firstElementChild
     this._type = type // 0 => dir, 1 => doc, 2 => pic, 3 => video
     this._name = name
     this._parent = parentNode
@@ -23,13 +23,22 @@ class FileIcon {
     this._obj.querySelector('.icon-img').innerHTML = iconString[this._type]
     this._obj.querySelector('.icon-txt').innerHTML = this._name
 
-    var self = this._obj.firstElementChild
-    this._obj.firstElementChild.addEventListener('click', (evt) => {
-      self.focus()
+    var self = this
+    this._obj.addEventListener('click', (evt) => {
+      evt.stopPropagation()
+      self.select()
       console.log('clicked')
     })
 
     this._parent.appendChild(this._obj)
+  }
+
+  select() {
+    let icons = this._parent.querySelectorAll('.file-icon')
+    Array.prototype.map.call(icons, (icon) => {
+      icon.classList.remove('is-selected')
+    })
+    this._obj.classList.add("is-selected")
   }
 }
 

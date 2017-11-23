@@ -45,14 +45,21 @@ uploadAreaCancelBtn.addEventListener('click', (evt) => {
   uploadArea.classList.remove("is-shown")
 })
 
+fileExplore.addEventListener('click', (evt) => {
+  let icons = fileExplore.querySelectorAll('.file-icon')
+  Array.prototype.map.call(icons, (icon) => {
+    icon.classList.remove('is-selected')
+  })
+})
+
 selfSection.classList.add('is-shown')
 
 ipc.on('get-files-reply', (evt, files) => {
-  files.map((filename) => {
-    let fileIcon = new FileIcon(1, filename, fileExplore)
+  files.map((fileobj) => {
+    let fileIcon = new FileIcon(fileobj.type, fileobj.name, fileExplore)
     fileIcon.show()
   })
 })
 
-ipc.send('get-files', '.')
+ipc.send('get-files', '.', true)
 
