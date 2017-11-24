@@ -22,7 +22,10 @@ fileUploadBtn.addEventListener('click', (evt) => {
 
 fileDownloadBtn.addEventListener('click', (evt) => {
   console.log("download file")
-  ipc.send('download-show') // TODO: filename, filetype, filesize
+  let icon_selected = fileExplore.querySelector('.is-selected')
+  let icon_name = icon_selected.querySelector('.icon-txt').innerHTML
+  // let fileInfo = fileIconList[icon_name].fileInfo()
+  ipc.send('download-show', fileIconList[icon_name].fileInfo())
 })
 
 fileNewBtn.addEventListener('click', (evt) => {
@@ -54,10 +57,14 @@ fileExplore.addEventListener('click', (evt) => {
 
 selfSection.classList.add('is-shown')
 
+let fileIconList = null
+
 ipc.on('get-files-reply', (evt, files) => {
+  fileIconList = {}
   files.map((fileobj) => {
-    let fileIcon = new FileIcon(fileobj.type, fileobj.name, fileExplore)
+    let fileIcon = new FileIcon(fileobj.type, fileobj.name, fileExplore, fileobj)
     fileIcon.show()
+    fileIconList[fileobj.name] = fileIcon
   })
 })
 

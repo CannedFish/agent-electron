@@ -12,11 +12,12 @@ const iconString = [
 
 class FileIcon {
 
-  constructor(type, name, parentNode) {
+  constructor(type, name, parentNode, info) {
     this._obj = document.importNode(fileIconTemplate.content, true).firstElementChild
     this._type = type // 0 => dir, 1 => doc, 2 => pic, 3 => video
     this._name = name
     this._parent = parentNode
+    this._info = info // name, type, size
   }
 
   show() {
@@ -39,6 +40,10 @@ class FileIcon {
       icon.classList.remove('is-selected')
     })
     this._obj.classList.add("is-selected")
+  }
+
+  fileInfo() {
+    return this._info
   }
 }
 

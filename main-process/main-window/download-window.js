@@ -39,9 +39,9 @@ function instance() {
   return downloadWindow
 }
 
-ipc.on('download-show', (evt) => {
+ipc.on('download-show', (evt, fileobj) => {
   instance().show()
-  evt.sender.send('download-show-reply') // TODO: filename, filetype, filesize
+  evt.sender.send('download-show-reply', fileobj)
 }).on('download-cancel', (evt) => {
   downloadWindow.close()
 }).on('download-path', (evt) => {

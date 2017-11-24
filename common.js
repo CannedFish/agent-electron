@@ -65,9 +65,9 @@ function getContainers(callback) {
   if(config.offline_debug) {
     setTimeout((cb) => {
       cb(null, [
-        {name: '文件夹1', type: 0},
-        {name: '文档2', type: 1},
-        {name: '文档3', type: 1}
+        {name: '文件夹1', type: 0, size: '34MB'},
+        {name: '文件夹2', type: 0, size: '432MB'},
+        {name: '文件夹3', type: 0, size: '98MB'}
       ])
     }, 3000, callback)
     return 
@@ -91,14 +91,44 @@ function getContainers(callback) {
 exports.getContainers = getContainers
 
 function getObjects(containerName) {
+  if(config.offline_debug) {
+    setTimeout((cb) => {
+      cb(null, [
+        {name: '文档1', type: 1, size: '34MB', container: 'container'},
+        {name: '文档2', type: 1, size: '432MB', container: 'container'},
+        {name: '文档3', type: 1, size: '98MB', container: 'container'}
+      ])
+    }, 3000, callback)
+    return 
+  }
+
   if(!info.token) {
     return callback('Please authenticate first')
   }
   httpCall('GET'
-    , '/api/containers?user={0}&key={1}&tenant_name={2}&container_name={3}'.format(info.usr, info.pwd, info.tenant_name, containerName)
+    , '/api/get_container?user={0}&key={1}&tenant_name={2}&container_name={3}&auth_url={4}&with_data=1'.format(info.usr, info.pwd, info.tenant_name, containerName, info.auth_url)
     , (err, ret) => {
       if(err) {
         return callback(err)
+      }
+      if(ret.errcode == 1) {
+        let info = ret.results[0]
+        return callback(null,
+          Array.prototype.map.call(info.data.split('\n'), (filename) => {
+            let filetype = null
+            if(filename.endsWith('/')) {
+              filetype = 0
+            } else {
+              filetype = 1
+            }
+            return {
+              name: filename,
+              type: filetype,
+              container: info.name
+            }
+        }))
+      } else {
+        return callback(ret.msg)
       }
   })
 }
@@ -109,10 +139,29 @@ function uploadObjects() {
   }
 }
 
-function downloadObjects() {
+function downloadObjects(containerName, objectName) {
+  if(config.offline_debug) {
+    setTimeout((cb) => {
+      cb(null)
+    }, 3000, callback)
+    return 
+  }
+
   if(!info.token) {
     return callback('Please authenticate first')
   }
+  httpCall('GET'
+    , '/api/get_object?user={0}&key={1}&tenant_name={2}&container_name={3}&auth_url={4}&object_name={5}&with_data=1'.format(info.usr, info.pwd, info.tenant_name, containerName, info.auth_url, objectName)
+    , (err, ret) => {
+      if(err) {
+        return callback(err)
+      }
+      if(ret.errcode == 1) {
+        return callback(null)
+      } else {
+        return callback(ret.msg)
+      }
+  })
 }
 
 function httpCall(http_method, http_path, callback) {
