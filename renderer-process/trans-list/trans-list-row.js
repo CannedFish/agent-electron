@@ -74,6 +74,10 @@ class TransListRow {
   openDir() {
     // TODO: open local file directory
   }
+
+  destroy() {
+    this._parent.removeChild(this._obj)
+  }
 }
 exports.TransListRow = TransListRow
 
@@ -110,6 +114,10 @@ class CompletedRow {
     this._obj.querySelector('.file-type').innerHTML = CompletedType[this._info.completeType]
 
     this._parent.appendChild(this._obj)
+  }
+
+  destroy() {
+    this._parent.removeChild(this._obj)
   }
 }
 exports.CompletedRow = CompletedRow

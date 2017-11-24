@@ -90,7 +90,7 @@ function getContainers(callback) {
 }
 exports.getContainers = getContainers
 
-function getObjects(containerName) {
+function getObjects(containerName, callback) {
   if(config.offline_debug) {
     setTimeout((cb) => {
       cb(null, [
@@ -132,18 +132,19 @@ function getObjects(containerName) {
       }
   })
 }
+exports.getObjects = getObjects
 
-function uploadObjects() {
+function uploadObject() {
   if(!info.token) {
     return callback('Please authenticate first')
   }
 }
 
-function downloadObjects(containerName, objectName) {
+function downloadObject(containerName, objectName, callback) {
   if(config.offline_debug) {
     setTimeout((cb) => {
       cb(null)
-    }, 3000, callback)
+    }, 30000, callback)
     return 
   }
 
@@ -163,6 +164,7 @@ function downloadObjects(containerName, objectName) {
       }
   })
 }
+exports.downloadObject = downloadObject
 
 function httpCall(http_method, http_path, callback) {
   const req = net.request({

@@ -21,6 +21,10 @@ const endAllBtn = document.getElementById("trans-list-end")
 const clearAllBtn = document.getElementById("trans-list-clear")
 const ctrlBtns = [startAllBtn, endAllBtn, clearAllBtn]
 
+let uploadList = {}
+let downloadList = {}
+let completeList = {}
+
 function unselectedAllTab() {
   tabList.map((tab) => {
     tab.classList.remove("is-shown")
@@ -34,6 +38,8 @@ function unselectedAllTab() {
 }
 
 (function main() {
+  // TODO: initialize uploadlist, downloadlist and completelist from record
+
   mainWindowToggleBtn.addEventListener('click', (evt) => {
     selfSection.classList.remove('is-shown')
     document.getElementById('main-window').classList.add('is-shown')
@@ -45,13 +51,6 @@ function unselectedAllTab() {
     uploadingTab.classList.add("is-shown")
     startAllBtn.classList.add("is-shown")
     endAllBtn.classList.add("is-shown")
-
-    let tlr = new TransListRow(uploadingTab, {
-      'type': 1,
-      'name': '恒泰云-值得信赖.png',
-      'size': '3.37MB'
-    })
-    tlr.show()
   })
 
   downloadingTabBtn.addEventListener('click', (evt) => {
@@ -60,13 +59,6 @@ function unselectedAllTab() {
     downloadingTab.classList.add("is-shown")
     startAllBtn.classList.add("is-shown")
     endAllBtn.classList.add("is-shown")
-
-    let tlr = new TransListRow(downloadingTab, {
-      'type': 1,
-      'name': '恒泰云-值得信赖.png',
-      'size': '3.37MB'
-    })
-    tlr.show()
   })
 
   completedTabBtn.addEventListener('click', (evt) => {
@@ -74,28 +66,22 @@ function unselectedAllTab() {
     completedTabBtn.classList.add("is-selected")
     completedTab.classList.add("is-shown")
     clearAllBtn.classList.add("is-shown")
-
-    let cr = new CompletedRow(completedTab, {
-      'type': 2,
-      'name': '恒泰云-值得信赖.png',
-      'size': '3.37MB',
-      'date': '17-08-12',
-      'completeType': 1
-    })
-    cr.show()
   })
 
   uploadingTabBtn.click()
 
-  ipc.on('upload-reply', (evt, filename, filetype, filesize) => {
+  ipc.on('uploading', (evt, filetype, filename, filesize) => {
     // add a row in upload tab
     addUploadRow(filetype, filename, filesize)
-  }).on('download-reply', (evt, filename, filetype, filesize) => {
+  }).on('downloading', (evt, filetype, filename, filesize) => {
     // add a row in download tab
     addDownloadRow(filetype, filename, filesize)
-  }).on('compeleted-reply', (evt, filename, filetype, filesize, date, completetype) => {
+  }).on('upload-complete', (evt, filetype, filename, filesize, date) => {
+    addCompletedRow(filetype, filename, filesize, date, 0)
+  }).on('download-complete', (evt, filetype, filename, filesize, date) => {
     // add a row in completed tab
-    addCompletedRow(filetype, filename, filesize, date, completetype)
+    addCompletedRow(filetype, filename, filesize, date, 1)
+    // TODO: remove row from download tab
   })
 })()
 

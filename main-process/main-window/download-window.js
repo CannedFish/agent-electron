@@ -6,13 +6,13 @@ const dialog = electron.dialog
 
 const debug = /--debug/.test(process.argv[2])
 
-const mainWin = require(path.join(__dirname, 'main-window.js')).instance()
 const common = require(path.join(__dirname, '../../common.js'))
 
 var downloadWindow = null
 
 function instance() {
   if(downloadWindow == null) {
+    const mainWin = require(path.join(__dirname, 'main-window.js')).instance()
     downloadWindow = new BrowserWindow({
       width: 480,
       height: 180,
@@ -40,8 +40,12 @@ function instance() {
 }
 
 ipc.on('download-show', (evt, fileobj) => {
-  instance().show()
-  evt.sender.send('download-show-reply', fileobj)
+  let win = instance()
+  win.once('ready-to-show', () => {
+    win.show()
+  }).once('show', (event) => {
+    event.sender.send('download-show-reply', fileobj)
+  })
 }).on('download-cancel', (evt) => {
   downloadWindow.close()
 }).on('download-path', (evt) => {
@@ -52,7 +56,18 @@ ipc.on('download-show', (evt, fileobj) => {
     console.log(download_path)
     evt.sender.send('download-path-reply', download_path[0])
   })
-}).on('download', (evt) => {
-  // TODO: do download action
+}).on('download', (evt, fileobj) => {
+  // TODO: generate a download session ID
+  let parentWin = downloadWindow.getParentWindow()
+  parentWin.webContents.send('downloading', fileobj.type, fileobj.name, fileobj.size)
+  common.downloadObject(fileobj.container, fileobj.name, (err) => {
+    if(err) {
+      return parentWin.webContents.send('download-err', fileobj, err)
+    }
+    return parentWin.webContents.send('download-complete'
+      , fileobj.type, fileobj.name, fileobj.size
+      , (new Date).toLocaleDateString().replace(/\//g, '-'))
+  })
+  downloadWindow.close()
 })
 

@@ -57,9 +57,13 @@ fileExplore.addEventListener('click', (evt) => {
 
 selfSection.classList.add('is-shown')
 
-let fileIconList = null
+let fileIconList = {}
 
 ipc.on('get-files-reply', (evt, files) => {
+  for(let k in fileIconList) {
+    fileIconList[k].destroy()
+  }
+
   fileIconList = {}
   files.map((fileobj) => {
     let fileIcon = new FileIcon(fileobj.type, fileobj.name, fileExplore, fileobj)

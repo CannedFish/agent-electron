@@ -24,7 +24,7 @@ pathBtn.addEventListener('click', (evt) => {
 })
 
 downloadBtn.addEventListener('click', (evt) => {
-  ipc.send('download')
+  ipc.send('download', fileSelected)
 })
 
 cancelBtn.addEventListener('click', (evt) => {
@@ -33,6 +33,7 @@ cancelBtn.addEventListener('click', (evt) => {
 
 ipc.on('download-show-reply', (evt, fileobj) => {
   // change file infomation
+  console.log(fileobj)
   fileIcon.innerHTML = iconString[fileobj.type]
   fileName.innerHTML = fileobj.name
   fileSize.innerHTML = fileobj.size

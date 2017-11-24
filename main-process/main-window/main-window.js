@@ -59,5 +59,9 @@ ipc.on('get-files', (evt, cur, dir) => {
       // console.log('get containers return', rets)
       evt.sender.send('get-files-reply', rets)
     })
+  } else {
+    common.getObjects(cur, (err, rets) => {
+      evt.sender.send('get-files-reply', rets)
+    })
   }
 })

@@ -109,7 +109,7 @@
 .trans-list-row .file-date {
   display: inline-block;
   margin-left: 13px;
-  width: 79px;
+  width: 100px;
   font-size: 18px;
   color: #666;
   position: relative;
@@ -117,7 +117,7 @@
 }
 .trans-list-row .file-type {
   display: inline-block;
-  margin-left: 120px;
+  margin-left: 100px;
   width: 94px;
   font-size: 18px;
   color: #666;

@@ -30,6 +30,13 @@ class FileIcon {
       self.select()
       console.log('clicked')
     })
+    if(this._type == 0) {
+      this._obj.addEventListener('dblclick', (evt) => {
+        evt.stopPropagation()
+        console.log('dbclicked')
+        ipc.send('get-files', this._name, false)
+      })
+    }
 
     this._parent.appendChild(this._obj)
   }
@@ -44,6 +51,10 @@ class FileIcon {
 
   fileInfo() {
     return this._info
+  }
+
+  destroy() {
+    this._parent.removeChild(this._obj)
   }
 }
 
