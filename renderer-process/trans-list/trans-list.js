@@ -70,37 +70,50 @@ function unselectedAllTab() {
 
   uploadingTabBtn.click()
 
-  ipc.on('uploading', (evt, filetype, filename, filesize) => {
+  let uploadRows = {}
+  let downloadRows = {}
+
+  ipc.on('uploading', (evt, filetype, filename, filesize, sessionId) => {
     // add a row in upload tab
-    addUploadRow(filetype, filename, filesize)
-  }).on('downloading', (evt, filetype, filename, filesize) => {
+    uploadRows[sessionId] = addUploadRow(filetype, filename, filesize)
+  }).on('downloading', (evt, filetype, filename, filesize, sessionId) => {
     // add a row in download tab
-    addDownloadRow(filetype, filename, filesize)
-  }).on('upload-complete', (evt, filetype, filename, filesize, date) => {
+    downloadRows[sessionId] = addDownloadRow(filetype, filename, filesize)
+  }).on('upload-complete', (evt, filetype, filename, filesize, date, sessionId) => {
     addCompletedRow(filetype, filename, filesize, date, 0)
-  }).on('download-complete', (evt, filetype, filename, filesize, date) => {
+    uploadRows[sessionId].destroy()
+    delete uploadRows[sessionId]
+  }).on('download-complete', (evt, filetype, filename, filesize, date, sessionId) => {
     // add a row in completed tab
     addCompletedRow(filetype, filename, filesize, date, 1)
-    // TODO: remove row from download tab
+    // remove row from download tab
+    downloadRows[sessionId].destroy()
+    delete downloadRows[sessionId]
   })
 })()
 
-function addUploadRow(file_type, file_name, file_size) {
+function addUploadRow(file_type, file_name, file_size, sessionId) {
   let tlr = new TransListRow(uploadingTab, {
     'type': file_type,
     'name': file_name,
-    'size': file_size
+    'size': file_size,
+    'id': sessionId
   })
   tlr.show()
+
+  return tlr
 }
 
-function addDownloadRow(file_type, file_name, file_size) {
+function addDownloadRow(file_type, file_name, file_size, sessionId) {
   let tlr = new TransListRow(downloadingTab, {
     'type': file_type,
     'name': file_name,
-    'size': file_size
+    'size': file_size,
+    'id': sessionId
   })
   tlr.show()
+
+  return tlr
 }
 
 function addCompletedRow(file_type, file_name, file_size, file_date, file_completeType) {
@@ -112,6 +125,8 @@ function addCompletedRow(file_type, file_name, file_size, file_date, file_comple
     'completeType': file_completeType
   })
   cr.show()
+
+  return cr
 }
 
 module.exports = {

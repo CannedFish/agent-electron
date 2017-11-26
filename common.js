@@ -3,6 +3,7 @@ if(!config.offline_debug) {
   const net = require('net')
   const sqlite3 = require('sqlite3').verbose()
 }
+const fs = require('fs')
 
 function getTenantInfo(callback) {
   if(config.offline_debug) {
@@ -47,7 +48,7 @@ function authenticate(usr, pwd, auth_url, tenant_name, callback) {
     return 
   }
 
-  httpCall('POST', '/api/authenticate', (err, ret) => {
+  httpCall('POST', '/api/authenticate', {}, (err, ret) => {
     if(err) {
       return callback(err)
     }
@@ -78,6 +79,7 @@ function getContainers(callback) {
   }
   httpCall('GET'
     , '/api/containers?preauthtoken={0}&preauthurl={1}&user={2}&tenant_name={3}'.format(info.token, info.auth_url, info.usr, info.tenant_name)
+    , null
     , (err, ret) => {
       if(err) {
         if(ret.errcode == 1) {
@@ -107,6 +109,7 @@ function getObjects(containerName, callback) {
   }
   httpCall('GET'
     , '/api/get_container?user={0}&key={1}&tenant_name={2}&container_name={3}&auth_url={4}&with_data=1'.format(info.usr, info.pwd, info.tenant_name, containerName, info.auth_url)
+    , null
     , (err, ret) => {
       if(err) {
         return callback(err)
@@ -134,10 +137,44 @@ function getObjects(containerName, callback) {
 }
 exports.getObjects = getObjects
 
-function uploadObject() {
+function uploadObject(uploadFilePath, callback) {
   if(!info.token) {
     return callback('Please authenticate first')
   }
+  const req = net.request({
+    method: 'POST',
+    protocol: 'http:',
+    hostname: config.api_host,
+    port: config.api_port,
+    path: '/api/upload_object'
+  })
+
+  req.on('response', (resp) => {
+    if(resp.statusCode != 200) {
+      return callback('Authenticate failed: {0}'.format(resp.statusCode))
+    }
+    let data = ''
+    resp.on('data', (chunk) => {
+      data += chunk
+    }).on('end', () => {
+      return callback(null, JSON.parse(data))
+    })
+  })
+
+  fs.stat(uploadFilePath, (err, stats) => {
+    if(err) {
+      return callback(err)
+    }
+    req.setHeader('Content-Type', 'multipart/form-data')
+    req.setHeader('Content-Length', stats.size)
+
+    let rs = fs.createReadStream(uploadFilePath)
+    rs.on('data', (chunk) => {
+      req.write(chunk)
+    }).on('end', () => {
+      req.end()
+    })
+  })
 }
 
 function downloadObject(containerName, objectName, callback) {
@@ -153,6 +190,7 @@ function downloadObject(containerName, objectName, callback) {
   }
   httpCall('GET'
     , '/api/get_object?user={0}&key={1}&tenant_name={2}&container_name={3}&auth_url={4}&object_name={5}&with_data=1'.format(info.usr, info.pwd, info.tenant_name, containerName, info.auth_url, objectName)
+    , null
     , (err, ret) => {
       if(err) {
         return callback(err)
@@ -166,7 +204,7 @@ function downloadObject(containerName, objectName, callback) {
 }
 exports.downloadObject = downloadObject
 
-function httpCall(http_method, http_path, callback) {
+function httpCall(http_method, http_path, post_data, callback) {
   const req = net.request({
     method: http_method,
     protocol: 'http:',
@@ -185,5 +223,8 @@ function httpCall(http_method, http_path, callback) {
       return callback(null, JSON.parse(data))
     })
   })
+  if(http_method == 'POST') {
+    req.write(JSON.stringify(post_data))
+  }
   req.end()
 }

@@ -3,6 +3,7 @@ const electron = require('electron')
 const BrowserWindow = electron.BrowserWindow
 const ipc = electron.ipcMain
 const dialog = electron.dialog
+const uuidv1 = require('uuid/v1')
 
 const debug = /--debug/.test(process.argv[2])
 
@@ -57,16 +58,18 @@ ipc.on('download-show', (evt, fileobj) => {
     evt.sender.send('download-path-reply', download_path[0])
   })
 }).on('download', (evt, fileobj) => {
-  // TODO: generate a download session ID
+  // generate a download session ID
+  let downloadSessionId = uuidv1()
   let parentWin = downloadWindow.getParentWindow()
-  parentWin.webContents.send('downloading', fileobj.type, fileobj.name, fileobj.size)
+  parentWin.webContents.send('downloading', fileobj.type, fileobj.name, fileobj.size, downloadSessionId)
   common.downloadObject(fileobj.container, fileobj.name, (err) => {
     if(err) {
       return parentWin.webContents.send('download-err', fileobj, err)
     }
     return parentWin.webContents.send('download-complete'
       , fileobj.type, fileobj.name, fileobj.size
-      , (new Date).toLocaleDateString().replace(/\//g, '-'))
+      , (new Date).toLocaleDateString().replace(/\//g, '-')
+      , downloadSessionId)
   })
   downloadWindow.close()
 })

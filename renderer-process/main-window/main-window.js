@@ -41,11 +41,20 @@ transListToggleBtn.addEventListener('click', (evt) => {
   document.getElementById("trans-list").classList.add('is-shown')
 })
 
+let uploadFilePath = null
+const uploadTip = uploadArea.querySelector('.tip')
+const origTip = "拖拽至此上传或点击上传"
+
 uploadAreaUploadBtn.addEventListener('click', (evt) => {
+  uploadArea.classList.remove("is-shown")
+  uploadTip.innerHTML = origTip
+  uploadFilePath = null
 })
 
 uploadAreaCancelBtn.addEventListener('click', (evt) => {
   uploadArea.classList.remove("is-shown")
+  uploadTip.innerHTML = origTip
+  uploadFilePath = null
 })
 
 fileExplore.addEventListener('click', (evt) => {
@@ -53,6 +62,15 @@ fileExplore.addEventListener('click', (evt) => {
   Array.prototype.map.call(icons, (icon) => {
     icon.classList.remove('is-selected')
   })
+})
+
+uploadArea.addEventListener('drop', (evt) => {
+  evt.stopPropagation()
+  evt.preventDefault()
+
+  let dt = evt.dataTransfer
+  uploadFilePath = dt.files[0]
+  uploadTip.innerHTML = uploadFilePath
 })
 
 selfSection.classList.add('is-shown')
