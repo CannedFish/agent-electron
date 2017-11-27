@@ -11,9 +11,28 @@ const transListToggleBtn = document.getElementById('to-trans-list')
 const uploadArea = document.getElementById("upload-area")
 const uploadAreaUploadBtn = document.getElementById("upload-area-upload")
 const uploadAreaCancelBtn = document.getElementById("upload-area-cancel")
+const uploadIcon = document.getElementById("icon-upload")
 
 const FileIcon = require(__dirname + '/file-icon')
 const fileExplore = document.getElementById('file-explore')
+
+document.addEventListener('dragenter', (evt) => {
+  evt.preventDefault()
+})
+
+document.addEventListener('dragover', (evt) => {
+  evt.preventDefault()
+})
+
+document.addEventListener('drop', (evt) => {
+  evt.stopPropagation()
+  evt.preventDefault()
+})
+
+uploadIcon.addEventListener('click', (evt) => {
+  evt.stopPropagation()
+  uploadArea.classList.add("is-shown")
+})
 
 fileUploadBtn.addEventListener('click', (evt) => {
   console.log("upload file")
@@ -41,20 +60,21 @@ transListToggleBtn.addEventListener('click', (evt) => {
   document.getElementById("trans-list").classList.add('is-shown')
 })
 
-let uploadFilePath = null
+let uploadFile = null
 const uploadTip = uploadArea.querySelector('.tip')
 const origTip = "拖拽至此上传或点击上传"
 
 uploadAreaUploadBtn.addEventListener('click', (evt) => {
+  ipc.send('upload', uploadFile, cur)
   uploadArea.classList.remove("is-shown")
   uploadTip.innerHTML = origTip
-  uploadFilePath = null
+  uploadFile = null
 })
 
 uploadAreaCancelBtn.addEventListener('click', (evt) => {
   uploadArea.classList.remove("is-shown")
   uploadTip.innerHTML = origTip
-  uploadFilePath = null
+  uploadFile = null
 })
 
 fileExplore.addEventListener('click', (evt) => {
@@ -69,15 +89,21 @@ uploadArea.addEventListener('drop', (evt) => {
   evt.preventDefault()
 
   let dt = evt.dataTransfer
-  uploadFilePath = dt.files[0]
-  uploadTip.innerHTML = uploadFilePath
+  uploadFile = {
+    name: dt.files[0].name,
+    size: dt.files[0].size,
+    type: dt.files[0].type,
+    path: dt.files[0].path
+  }
+  uploadTip.innerHTML = uploadFile.path
 })
 
 selfSection.classList.add('is-shown')
 
 let fileIconList = {}
+let cur = null
 
-ipc.on('get-files-reply', (evt, files) => {
+ipc.on('get-files-reply', (evt, files, curPath) => {
   for(let k in fileIconList) {
     fileIconList[k].destroy()
   }
@@ -88,7 +114,9 @@ ipc.on('get-files-reply', (evt, files) => {
     fileIcon.show()
     fileIconList[fileobj.name] = fileIcon
   })
+
+  cur = curPath
 })
 
-ipc.send('get-files', '.', true)
+ipc.send('get-files', '/', true)
 
