@@ -1,10 +1,14 @@
 const path = require('path')
 const fs = require('fs')
+const uuidv1 = require('uuid/v1')
 
 const config = require(__dirname + '/config.js')
+
+const net = require('http')
+// const net = require('electron').net
+let sqlite3 = null
 if(!config.offline_debug) {
-  const net = require('net')
-  const sqlite3 = require('sqlite3').verbose()
+  sqlite3 = require('sqlite3').verbose()
 }
 
 function getTenantInfo(callback) {
@@ -15,6 +19,7 @@ function getTenantInfo(callback) {
     return 
   }
 
+  console.log(config.db_file_path)
   let db = new sqlite3.Database(config.db_file_path)
 
   db.get('select auth_url, tenant_name from info', (err, row) => {
@@ -50,7 +55,12 @@ function authenticate(usr, pwd, auth_url, tenant_name, callback) {
     return 
   }
 
-  doPost('/api/authenticate', {}, (err, ret) => {
+  doPost('/api/authenticate', {
+	  user: usr,
+	  key: pwd,
+	  auth_url: auth_url,
+	  tenant_name: tenant_name
+  }, (err, ret) => {
     if(err) {
       return callback(err)
     }
@@ -172,6 +182,15 @@ function uploadObject(uploadFilePath, fileSize, container, callback) {
   req.setHeader('Content-Type', 'multipart/form-data')
   // req.setHeader('Content-Length', fileSize)
 
+  req.write(JSON.stringify({
+	  user: info.usr,
+	  key: info.key,
+	  auth_url: info.auth_url,
+	  tenant_name: info.tenant_name,
+	  object_name: fileName + uuidv1(),
+	  orig_file_name: fileName
+  }))
+  
   let rs = fs.createReadStream(uploadFilePath)
   rs.on('data', (chunk) => {
     req.write(chunk)
@@ -214,6 +233,7 @@ function doGet(http_path, callback) {
     port: config.api_port,
     path: http_path
   })
+  console.log(req)
   req.on('response', (resp) => {
     if(resp.statusCode != 200) {
       return callback('Authenticate failed: {0}'.format(resp.statusCode))
@@ -236,6 +256,7 @@ function doPost(http_path, post_data, callback) {
     port: config.api_port,
     path: http_path
   })
+  console.log(req)
   req.on('response', (resp) => {
     if(resp.statusCode != 200) {
       return callback('Authenticate failed: {0}'.format(resp.statusCode))
