@@ -80,7 +80,6 @@ function getContainers(callback) {
     return callback('Please authenticate first')
   }
   doGet('/api/containers?preauthtoken={0}&preauthurl={1}&user={2}&tenant_name={3}'.format(info.token, info.auth_url, info.usr, info.tenant_name)
-    , null
     , (err, ret) => {
       if(err) {
         if(ret.errcode == 1) {
@@ -109,7 +108,6 @@ function getObjects(containerName, callback) {
     return callback('Please authenticate first')
   }
   doGet('/api/get_container?user={0}&key={1}&tenant_name={2}&container_name={3}&auth_url={4}&with_data=1'.format(info.usr, info.pwd, info.tenant_name, containerName, info.auth_url)
-    , null
     , (err, ret) => {
       if(err) {
         return callback(err)
@@ -195,7 +193,6 @@ function downloadObject(containerName, objectName, callback) {
     return callback('Please authenticate first')
   }
   doGet('/api/get_object?user={0}&key={1}&tenant_name={2}&container_name={3}&auth_url={4}&object_name={5}&with_data=1'.format(info.usr, info.pwd, info.tenant_name, containerName, info.auth_url, objectName)
-    , null
     , (err, ret) => {
       if(err) {
         return callback(err)
