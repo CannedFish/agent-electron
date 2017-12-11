@@ -64,12 +64,12 @@ function authenticate(usr, pwd, auth_url, tenant_name, callback) {
     if(err) {
       return callback(err)
     }
-    info.token = ret.token
+    info.token = ret.results[0].token
     info.usr = usr
     info.pwd = pwd
     info.auth_url = auth_url
     info.tenant_name = tenant_name
-    return callback(null, ret.token)
+    return callback(null, ret)
   })
 }
 exports.authenticate = authenticate
@@ -89,14 +89,15 @@ function getContainers(callback) {
   if(!info.token) {
     return callback('Please authenticate first')
   }
-  doGet('/api/containers?preauthtoken={0}&preauthurl={1}&user={2}&tenant_name={3}'.format(info.token, info.auth_url, info.usr, info.tenant_name)
+  doGet(`/api/containers?user=${info.usr}&key=${info.pwd}&tenant_name=${info.tenant_name}&auth_url=${info.auth_url}`
     , (err, ret) => {
       if(err) {
-        if(ret.errcode == 1) {
-          return callback(null, ret.results)
-        } else {
-          return callback(ret.msg)
-        }
+        return callback(err)
+      }
+      if(ret.errcode == 1) {
+        return callback(null, ret.results)
+      } else {
+        return callback(ret.msg)
       }
   })
 }
@@ -117,7 +118,7 @@ function getObjects(containerName, callback) {
   if(!info.token) {
     return callback('Please authenticate first')
   }
-  doGet('/api/get_container?user={0}&key={1}&tenant_name={2}&container_name={3}&auth_url={4}&with_data=1'.format(info.usr, info.pwd, info.tenant_name, containerName, info.auth_url)
+  doGet(`/api/get_container?user=${info.usr}&key=${info.pwd}&tenant_name=${info.tenant_name}&container_name=${containerName}&auth_url=${info.auth_url}&with_data=1`
     , (err, ret) => {
       if(err) {
         return callback(err)
@@ -146,6 +147,8 @@ function getObjects(containerName, callback) {
 exports.getObjects = getObjects
 
 function uploadObject(uploadFilePath, fileSize, container, callback) {
+  console.log(`POST http://${config.api_host}:${config.api_port}/api/upload_object`)
+
   if(config.offline_debug) {
     setTimeout((cb) => {
       cb(null, {
@@ -158,7 +161,9 @@ function uploadObject(uploadFilePath, fileSize, container, callback) {
   if(!info.token) {
     return callback('Please authenticate first')
   }
-  let fileName = path.basename(uploadFilePath)
+  const boundaryKey = Math.random().toString(16)
+  const fileName = path.basename(uploadFilePath)
+
   const req = net.request({
     method: 'POST',
     protocol: 'http:',
@@ -169,7 +174,7 @@ function uploadObject(uploadFilePath, fileSize, container, callback) {
 
   req.on('response', (resp) => {
     if(resp.statusCode != 200) {
-      return callback('Authenticate failed: {0}'.format(resp.statusCode))
+      return callback(`Authenticate failed: ${resp.statusCode}`)
     }
     let data = ''
     resp.on('data', (chunk) => {
@@ -179,23 +184,35 @@ function uploadObject(uploadFilePath, fileSize, container, callback) {
     })
   })
 
-  req.setHeader('Content-Type', 'multipart/form-data')
-  // req.setHeader('Content-Length', fileSize)
+  let postData = JSON.stringify({
+    user: info.usr,
+    key: info.key,
+    auth_url: info.auth_url,
+    tenant_name: info.tenant_name,
+    object_name: fileName + uuidv1(),
+    orig_file_name: fileName
+  })
+  let payload = `--${boundaryKey}\r\n`
+        + `Content-Disposition: form-data; name="data"\r\n`
+        + `${postData}\r\n`
+        + `--${boundaryKey}\r\n`
+        + `Content-Disposition: form-data; name="upload_file"; filename="${fileName}"\r\n`
+  let endStr = `\r\n--${boundaryKey}--`
 
-  req.write(JSON.stringify({
-	  user: info.usr,
-	  key: info.key,
-	  auth_url: info.auth_url,
-	  tenant_name: info.tenant_name,
-	  object_name: fileName + uuidv1(),
-	  orig_file_name: fileName
-  }))
+
+  req.setHeader('Content-Type', `multipart/form-data; boundary=${boundaryKey}`)
+  req.setHeader('Content-Length', Buffer.byteLength(payload)+fileSize+Buffer.byteLength(endStr))
+
+  console.log('payload', payload)
+  req.write(payload)
   
   let rs = fs.createReadStream(uploadFilePath)
   rs.on('data', (chunk) => {
+    console.log('file chunk', chunk)
     req.write(chunk)
   }).on('end', () => {
-    req.end()
+    console.log('end string', endStr)
+    req.end(endStr)
   })
 }
 exports.uploadObject = uploadObject
@@ -211,7 +228,7 @@ function downloadObject(containerName, objectName, callback) {
   if(!info.token) {
     return callback('Please authenticate first')
   }
-  doGet('/api/get_object?user={0}&key={1}&tenant_name={2}&container_name={3}&auth_url={4}&object_name={5}&with_data=1'.format(info.usr, info.pwd, info.tenant_name, containerName, info.auth_url, objectName)
+  doGet(`/api/get_object?user=${info.usr}&key=${info.pwd}&tenant_name=${info.tenant_name}&container_name=${containerName}&auth_url=${info.auth_url}&object_name=${objectName}&with_data=1`
     , (err, ret) => {
       if(err) {
         return callback(err)
@@ -226,6 +243,7 @@ function downloadObject(containerName, objectName, callback) {
 exports.downloadObject = downloadObject
 
 function doGet(http_path, callback) {
+  console.log(`GET http://${config.api_host}:${config.api_port}/${http_path}`)
   const req = net.request({
     method: 'GET',
     protocol: 'http:',
@@ -233,10 +251,10 @@ function doGet(http_path, callback) {
     port: config.api_port,
     path: http_path
   })
-  console.log(req)
+  // console.log(req)
   req.on('response', (resp) => {
     if(resp.statusCode != 200) {
-      return callback('Authenticate failed: {0}'.format(resp.statusCode))
+      return callback(`Authenticate failed: ${resp.statusCode}`)
     }
     let data = ''
     resp.on('data', (chunk) => {
@@ -244,30 +262,43 @@ function doGet(http_path, callback) {
     }).on('end', () => {
       return callback(null, JSON.parse(data))
     })
+  }).on('error', (err) => {
+    console.error('Get error occured:', err)
+    return callback(err)
   })
   req.end()
 }
 
 function doPost(http_path, post_data, callback) {
+  console.log(`POST http://${config.api_host}:${config.api_port}/${http_path}`)
+  const postData = 'data='+JSON.stringify(post_data)
   const req = net.request({
     method: 'POST',
     protocol: 'http:',
     hostname: config.api_host,
     port: config.api_port,
-    path: http_path
+    path: http_path,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Content-Length': Buffer.byteLength(postData)
+    }
   })
-  console.log(req)
+  // console.log(req)
   req.on('response', (resp) => {
     if(resp.statusCode != 200) {
-      return callback('Authenticate failed: {0}'.format(resp.statusCode))
+      return callback(`Authenticate failed: ${resp.statusCode}`)
     }
     let data = ''
     resp.on('data', (chunk) => {
       data += chunk
-    }).on('end', () => {
+    }).on('end', (chunk) => {
       return callback(null, JSON.parse(data))
     })
+  }).on('error', (err) => {
+    console.error('Post error occured:', err)
+    return callback(err)
   })
-  req.write(JSON.stringify(post_data))
+
+  req.write(postData)
   req.end()
 }
