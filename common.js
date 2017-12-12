@@ -184,20 +184,15 @@ function uploadObject(uploadFilePath, fileSize, container, callback) {
     })
   })
 
-  let postData = JSON.stringify({
-    user: info.usr,
-    key: info.key,
-    auth_url: info.auth_url,
-    tenant_name: info.tenant_name,
-    object_name: fileName + uuidv1(),
-    orig_file_name: fileName
-  })
-  let payload = `--${boundaryKey}\r\n`
-        + `Content-Disposition: form-data; name="data"\r\n`
-        + `${postData}\r\n`
-        + `--${boundaryKey}\r\n`
-        + `Content-Disposition: form-data; name="upload_file"; filename="${fileName}"\r\n`
-  let endStr = `\r\n--${boundaryKey}--`
+  let payload = `--${boundaryKey}\r\nContent-Disposition: form-data; name="user"\r\n\r\n${info.usr}\r\n`
+        + `--${boundaryKey}\r\nContent-Disposition: form-data; name="key"\r\n\r\n${info.pwd}\r\n`
+        + `--${boundaryKey}\r\nContent-Disposition: form-data; name="auth_url"\r\n\r\n${info.auth_url}\r\n`
+        + `--${boundaryKey}\r\nContent-Disposition: form-data; name="tenant_name"\r\n\r\n${info.tenant_name}\r\n`
+        + `--${boundaryKey}\r\nContent-Disposition: form-data; name="container_name"\r\n\r\n${container}\r\n`
+        + `--${boundaryKey}\r\nContent-Disposition: form-data; name="object_name"\r\n\r\n${fileName+uuidv1()}\r\n`
+        + `--${boundaryKey}\r\nContent-Disposition: form-data; name="orig_file_name"\r\n\r\n${fileName}\r\n`
+        + `--${boundaryKey}\r\nContent-Disposition: form-data; name="upload_file"; filename="${fileName}"\r\n\r\n`
+  let endStr = `\r\n--${boundaryKey}--\r\n`
 
 
   req.setHeader('Content-Type', `multipart/form-data; boundary=${boundaryKey}`)

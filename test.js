@@ -1,4 +1,5 @@
 const path = require('path')
+const fs = require('fs')
 
 const common = require(path.join(__dirname, 'common.js'))
 
@@ -43,7 +44,8 @@ common.getTenantInfo((err, auth_url, tenant_name) => {
         console.log('result:', objects)
       })
 
-      common.uploadObject(local_file_path, '123', target_container, (err, object) => {
+      file_stat = fs.statSync(local_file_path)
+      common.uploadObject(local_file_path, file_stat.size, target_container, (err, object) => {
         if(err) {
           return console.log(err)
         }
@@ -51,7 +53,7 @@ common.getTenantInfo((err, auth_url, tenant_name) => {
         console.log('result:', object)
       })
 
-      common.downloadObject(target_container, 'bbb', (err) => {
+      common.downloadObject(target_container, 'config.js711af8b0-df20-11e7-bbd1-fd55e8441110', (err) => {
         if(err) {
           return console.log(err)
         }
