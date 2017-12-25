@@ -57,12 +57,12 @@ ipc.on('download-show', (evt, fileobj) => {
     console.log(download_path)
     evt.sender.send('download-path-reply', download_path[0])
   })
-}).on('download', (evt, fileobj) => {
+}).on('download', (evt, fileobj, download_to) => {
   // generate a download session ID
   let downloadSessionId = uuidv1()
   let parentWin = downloadWindow.getParentWindow()
   parentWin.webContents.send('downloading', fileobj.type, fileobj.name, fileobj.size, downloadSessionId)
-  common.downloadObject(fileobj.container, fileobj.name, (err) => {
+  common.downloadObject(fileobj.container, fileobj.name, path.join(download_to, fileobj.name), (err) => {
     if(err) {
       return parentWin.webContents.send('download-err', fileobj, err)
     }

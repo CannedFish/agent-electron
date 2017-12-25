@@ -53,9 +53,9 @@ common.getTenantInfo((err, auth_url, tenant_name) => {
         console.log('result:', object)
       })
 
-      common.downloadObject(target_container, 'config.js711af8b0-df20-11e7-bbd1-fd55e8441110', (err) => {
+      common.downloadObject(target_container, 'config.js711af8b0-df20-11e7-bbd1-fd55e8441110', '/root/clouddoc/testdownload', (err) => {
         if(err) {
-          return console.log(err)
+          return console.log('get object error:', err)
         }
         console.log('\n#5 downloadObject')
         console.log('result:', 'successfully')

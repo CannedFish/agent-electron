@@ -24,7 +24,10 @@ pathBtn.addEventListener('click', (evt) => {
 })
 
 downloadBtn.addEventListener('click', (evt) => {
-  ipc.send('download', fileSelected)
+  if(downloadPath.value == '') {
+    return alert('请选择下载路径')
+  }
+  ipc.send('download', fileSelected, downloadPath.value)
 })
 
 cancelBtn.addEventListener('click', (evt) => {

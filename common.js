@@ -95,7 +95,9 @@ function getContainers(callback) {
         return callback(err)
       }
       if(ret.errcode == 1) {
-        return callback(null, ret.results)
+        return callback(null, ret.results.map((f) => {
+          return {name: f.name, type: 0, count: f.count, size: f.bytes};
+        }))
       } else {
         return callback(ret.msg)
       }
@@ -118,31 +120,62 @@ function getObjects(containerName, callback) {
   if(!info.token) {
     return callback('Please authenticate first')
   }
-  doGet(`/api/get_container?user=${info.usr}&key=${info.pwd}&tenant_name=${info.tenant_name}&container_name=${containerName}&auth_url=${info.auth_url}&with_data=1`
+  // doGet(`/api/get_container?user=${info.usr}&key=${info.pwd}&tenant_name=${info.tenant_name}&container_name=${containerName}&auth_url=${info.auth_url}&with_data=1`
+  //   , (err, ret) => {
+  //     if(err) {
+  //       return callback(err)
+  //     }
+  //     if(ret.errcode == 1) {
+  //       let info = ret.results[0]
+  //       return callback(null,
+  //         Array.prototype.map.call(info.data.split('\n'), (filename) => {
+  //           let filetype = null
+  //           if(filename.endsWith('/')) {
+  //             filetype = 0
+  //           } else {
+  //             filetype = 1
+  //           }
+  //           return {
+  //             name: filename,
+  //             type: filetype,
+  //             container: containerName,
+  //             size: 0
+  //           }
+  //       }))
+  //     } else {
+  //       return callback(ret.msg)
+  //     }
+  // })
+  doGet(`/api/objects?user=${info.usr}&key=${info.pwd}&tenant_name=${info.tenant_name}&container_name=${containerName}&auth_url=${info.auth_url}`
     , (err, ret) => {
       if(err) {
         return callback(err)
       }
       if(ret.errcode == 1) {
-        let info = ret.results[0]
-        return callback(null,
-          Array.prototype.map.call(info.data.split('\n'), (filename) => {
-            let filetype = null
-            if(filename.endsWith('/')) {
-              filetype = 0
-            } else {
-              filetype = 1
-            }
+        return callback(null, ret.results.map((obj) => {
+          if(obj.hasOwnProperty('subdir')) {
             return {
-              name: filename,
-              type: filetype,
-              container: info.name
+              name: obj.subdir,
+              type: 0,
+              size: 0,
+              container: containerName,
+              last_modified: null
             }
+          } else {
+            return {
+              name: obj.name,
+              type: 1,
+              size: obj.bytes,
+              container: containerName,
+              last_modified: obj.last_modified
+            }
+          }
         }))
       } else {
         return callback(ret.msg)
       }
   })
+
 }
 exports.getObjects = getObjects
 
@@ -212,7 +245,7 @@ function uploadObject(uploadFilePath, fileSize, container, callback) {
 }
 exports.uploadObject = uploadObject
 
-function downloadObject(containerName, objectName, callback) {
+function downloadObject(containerName, objectName, download_to, callback) {
   if(config.offline_debug) {
     setTimeout((cb) => {
       cb(null)
@@ -223,7 +256,7 @@ function downloadObject(containerName, objectName, callback) {
   if(!info.token) {
     return callback('Please authenticate first')
   }
-  doGet(`/api/get_object?user=${info.usr}&key=${info.pwd}&tenant_name=${info.tenant_name}&container_name=${containerName}&auth_url=${info.auth_url}&object_name=${objectName}&with_data=1`
+  doGet(`/api/get_object?user=${info.usr}&key=${info.pwd}&tenant_name=${info.tenant_name}&container_name=${containerName}&auth_url=${info.auth_url}&object_name=${objectName}&with_data=1&download_to=${download_to}`
     , (err, ret) => {
       if(err) {
         return callback(err)
