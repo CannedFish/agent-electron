@@ -95,6 +95,8 @@
   margin-left: 12px;
   width: 280px;
   height: inherit;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .trans-list-row .info .file-name {
   font-size: 18px;

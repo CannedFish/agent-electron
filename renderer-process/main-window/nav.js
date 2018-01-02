@@ -19,6 +19,7 @@ function unselectedAllBtn() {
 navAllFilesBtn.addEventListener('click', (evt) => {
   unselectedAllBtn()
   navAllFilesBtn.classList.add('is-selected')
+  ipc.send('get-files', '/', true)
 })
 navPicBtn.addEventListener('click', (evt) => {
   unselectedAllBtn()

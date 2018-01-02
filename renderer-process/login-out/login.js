@@ -20,12 +20,22 @@ let autologin = false
 
 ipc.send('checkbox-state')
 
-loginBtn.addEventListener('click', function () {
+function login() {
   if (usrInput.value === '' || pwdInput.value === '') {
     alert("Username or Password is None!")
   } else {
     // send msg to main process for login
     ipc.send('login', usrInput.value + '#' + pwdInput.value)
+  }
+}
+
+loginBtn.addEventListener('click', function () {
+  login()
+})
+
+document.addEventListener('keypress', (evt) => {
+  if(evt.key == "Enter") {
+    login()
   }
 })
 

@@ -103,9 +103,12 @@
   text-align: center;
   border: 2px solid #F9F9F9;
   border-radius: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .content .content-body .file-icon:hover {
   border: 2px solid rgba(80, 158, 209, 0.2);
+  overflow: initial;
 }
 .content .content-body .file-icon.is-selected {
   background: rgba(80, 158, 209, 0.2);

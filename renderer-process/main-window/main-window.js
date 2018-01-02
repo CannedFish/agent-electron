@@ -116,6 +116,8 @@ ipc.on('get-files-reply', (evt, files, curPath) => {
   })
 
   cur = curPath
+}).on('upload-complete', (evt) => {
+  ipc.send('get-files', cur, cur=='/')
 })
 
 ipc.send('get-files', '/', true)

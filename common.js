@@ -111,7 +111,7 @@ function getObjects(containerName, callback) {
       cb(null, [
         {name: '文档1', type: 1, size: '34MB', container: 'container'},
         {name: '文档2', type: 1, size: '432MB', container: 'container'},
-        {name: '文档3', type: 1, size: '98MB', container: 'container'}
+        {name: '文档3-234234-235234-123-32423-5345234232', type: 1, size: '98MB', container: 'container'}
       ])
     }, 3000, callback)
     return 

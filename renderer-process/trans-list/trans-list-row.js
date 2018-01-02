@@ -38,6 +38,7 @@ class TransListRow {
   show() {
     this._obj.querySelector('.file-icon2').innerHTML = iconString[this._info['type']]
     this._obj.querySelector('.file-name').innerHTML = this._info['name']
+    this._obj.querySelector('.file-name').title = this._info['name']
     this._obj.querySelector('.file-size').innerHTML = this._info['size']
 
     this._parent.appendChild(this._obj)
@@ -109,6 +110,7 @@ class CompletedRow {
   show() {
     this._obj.querySelector('.file-icon2').innerHTML = iconString[this._info.type]
     this._obj.querySelector('.file-name').innerHTML = this._info.name
+    this._obj.querySelector('.file-name').title = this._info.name
     this._obj.querySelector('.file-size').innerHTML = this._info.size
     this._obj.querySelector('.file-date').innerHTML = this._info.date
     this._obj.querySelector('.file-type').innerHTML = CompletedType[this._info.completeType]
