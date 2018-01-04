@@ -113,6 +113,9 @@
 .content .content-body .file-icon.is-selected {
   background: rgba(80, 158, 209, 0.2);
 }
+.content .content-body .file-icon.is-hidden {
+  display: none;
+}
 
 .content .content-body .file-icon .icon-img {
   width: inherit;

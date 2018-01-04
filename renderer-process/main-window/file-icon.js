@@ -41,6 +41,22 @@ class FileIcon {
     this._parent.appendChild(this._obj)
   }
 
+  hide() {
+    let icons = this._parent.querySelectorAll('.file-icon')
+    Array.prototype.map.call(icons, (icon) => {
+      icon.classList.remove('is-selected')
+    })
+    this._obj.classList.add('is-hidden')
+  }
+
+  showFromHidden() {
+    let icons = this._parent.querySelectorAll('.file-icon')
+    Array.prototype.map.call(icons, (icon) => {
+      icon.classList.remove('is-selected')
+    })
+    this._obj.classList.remove('is-hidden')
+  }
+
   select() {
     let icons = this._parent.querySelectorAll('.file-icon')
     Array.prototype.map.call(icons, (icon) => {

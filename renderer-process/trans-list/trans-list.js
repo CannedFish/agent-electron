@@ -125,6 +125,7 @@ function addCompletedRow(file_type, file_name, file_size, file_date, file_comple
     'completeType': file_completeType
   })
   cr.show()
+  // TODO: send a event to save this record to disk
 
   return cr
 }

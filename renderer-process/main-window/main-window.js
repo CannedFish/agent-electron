@@ -98,6 +98,15 @@ uploadArea.addEventListener('drop', (evt) => {
   uploadTip.innerHTML = uploadFile.path
 })
 
+fileSearchInput.addEventListener('input', (e) => {
+  e.stopPropagation()
+
+  let target = fileSearchInput.value
+  for(let k in fileIconList) {
+    k.includes(target) ? fileIconList[k].showFromHidden() : fileIconList[k].hide()
+  }
+})
+
 selfSection.classList.add('is-shown')
 
 let fileIconList = {}
