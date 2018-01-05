@@ -111,7 +111,7 @@ function getObjects(containerName, callback) {
       cb(null, [
         {name: '文档1', type: 1, size: '34MB', container: 'container'},
         {name: '文档2', type: 1, size: '432MB', container: 'container'},
-        {name: '文档3-234234-235234-123-32423-5345234232', type: 1, size: '98MB', container: 'container'}
+        {name: '文档3-234234-235234-123-32423-5345234232-1234123412432-234', type: 1, size: '98MB', container: 'container'}
       ])
     }, 3000, callback)
     return 
@@ -256,7 +256,10 @@ function downloadObject(containerName, objectName, download_to, callback) {
   if(!info.token) {
     return callback('Please authenticate first')
   }
-  doGet(`/api/get_object?user=${info.usr}&key=${info.pwd}&tenant_name=${info.tenant_name}&container_name=${containerName}&auth_url=${info.auth_url}&object_name=${objectName}&with_data=1&download_to=${download_to}`
+  let b64ConName = new Buffer(containerName).toString('base64')
+  let b64ObjName = new Buffer(objectName).toString('base64')
+  let b64DownloadTo = new Buffer(download_to).toString('base64')
+  doGet(`/api/get_object?user=${info.usr}&key=${info.pwd}&tenant_name=${info.tenant_name}&container_name=${b64ConName}&auth_url=${info.auth_url}&object_name=${b64ObjName}&with_data=1&download_to=${b64DownloadTo}`
     , (err, ret) => {
       if(err) {
         return callback(err)

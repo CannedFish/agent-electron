@@ -39,6 +39,7 @@ ipc.on('download-show-reply', (evt, fileobj) => {
   console.log(fileobj)
   fileIcon.innerHTML = iconString[fileobj.type]
   fileName.innerHTML = fileobj.name
+  fileName.title = fileobj.name
   fileSize.innerHTML = fileobj.size
   fileSelected = fileobj
 }).on('download-path-reply', (evt, path) => {
