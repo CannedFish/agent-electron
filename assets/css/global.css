@@ -199,3 +199,7 @@ body {
   overflow-y: auto;
 }
 
+.display-hidden {
+  display: none;
+}
+

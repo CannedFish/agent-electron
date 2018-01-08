@@ -1,13 +1,13 @@
 <template class="task-template">
   <section id="nav-section" class="section">
     <header class="nav-header">
-      <div class="nav-title">User X's netdisk</div>
+      <div class="nav-title">恒泰艾普云网盘</div>
       <svg class="nav-header-icon"><use xlink:href="assets/img/icons.svg#icon-electron"></use></svg>
       <div class="nav-header-info nav-header-usr">用户名</div>
-      <div class="nav-header-info nav-header-space">
-        <span class="space-used"></span>
-        <span class="space-info">33GB/100GB</span>
-      </div>
+      <!-- <div class="nav-header-info nav-header-space"> -->
+        <!-- <span class="space-used"></span> -->
+        <!-- <span class="space-info">33GB/100GB</span> -->
+      <!-- </div> -->
     </header>
     <div class="nav-body">
       <div id="nav-all" class="nav-item">
@@ -17,27 +17,27 @@
         <!-- <button type="button" id="button-all-files" data-section="all-files" class="nav-button">File explorer</button> -->
         <!-- <button type="button" id="button-upload-file" data-section="upload-file" class="nav-button">Upload file</button> -->
         全部文件
-        <span class="nav-number">1024</span>
+        <!-- <span class="nav-number">1024</span> -->
       </div>
-      <div id="nav-pic" class="nav-item">
+      <div id="nav-pic" class="nav-item display-hidden">
         <svg class="nav-icon icon" aria-hidden="true">
           <use xlink:href="#icon-tupian"></use>
         </svg>
         图片
       </div>
-      <div id="nav-doc" class="nav-item">
+      <div id="nav-doc" class="nav-item display-hidden">
         <svg class="nav-icon icon" aria-hidden="true">
           <use xlink:href="#icon-wendang"></use>
         </svg>
         文档
       </div>
-      <div id="nav-video" class="nav-item">
+      <div id="nav-video" class="nav-item display-hidden">
         <svg class="nav-icon icon" aria-hidden="true">
           <use xlink:href="#icon-shipin"></use>
         </svg>
         视频
       </div>
-      <div id="nav-other" class="nav-item">
+      <div id="nav-other" class="nav-item display-hidden">
         <svg class="nav-icon icon" aria-hidden="true">
           <use xlink:href="#icon-qita"></use>
         </svg>

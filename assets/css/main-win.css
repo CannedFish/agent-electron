@@ -68,9 +68,11 @@
 }
 .content .content-header .btn.new {
   left: 620px;
+  display: none;
 }
 .content .content-header .btn.more {
   left: 720px;
+  display: none;
 }
 
 .content .content-header .toggle {

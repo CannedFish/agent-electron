@@ -146,7 +146,8 @@ function getObjects(containerName, callback) {
   //       return callback(ret.msg)
   //     }
   // })
-  doGet(`/api/objects?user=${info.usr}&key=${info.pwd}&tenant_name=${info.tenant_name}&container_name=${containerName}&auth_url=${info.auth_url}`
+  let b64ConName = new Buffer(containerName).toString('base64')
+  doGet(`/api/objects?user=${info.usr}&key=${info.pwd}&tenant_name=${info.tenant_name}&container_name=${b64ConName}&auth_url=${info.auth_url}`
     , (err, ret) => {
       if(err) {
         return callback(err)
@@ -217,12 +218,13 @@ function uploadObject(uploadFilePath, fileSize, container, callback) {
     })
   })
 
+  let now = new Date()
   let payload = `--${boundaryKey}\r\nContent-Disposition: form-data; name="user"\r\n\r\n${info.usr}\r\n`
         + `--${boundaryKey}\r\nContent-Disposition: form-data; name="key"\r\n\r\n${info.pwd}\r\n`
         + `--${boundaryKey}\r\nContent-Disposition: form-data; name="auth_url"\r\n\r\n${info.auth_url}\r\n`
         + `--${boundaryKey}\r\nContent-Disposition: form-data; name="tenant_name"\r\n\r\n${info.tenant_name}\r\n`
         + `--${boundaryKey}\r\nContent-Disposition: form-data; name="container_name"\r\n\r\n${container}\r\n`
-        + `--${boundaryKey}\r\nContent-Disposition: form-data; name="object_name"\r\n\r\n${fileName+uuidv1()}\r\n`
+        + `--${boundaryKey}\r\nContent-Disposition: form-data; name="object_name"\r\n\r\n${fileName+'.'+now.toISOString().replace(/:/g, '-')}\r\n`
         + `--${boundaryKey}\r\nContent-Disposition: form-data; name="orig_file_name"\r\n\r\n${fileName}\r\n`
         + `--${boundaryKey}\r\nContent-Disposition: form-data; name="upload_file"; filename="${fileName}"\r\n\r\n`
   let endStr = `\r\n--${boundaryKey}--\r\n`

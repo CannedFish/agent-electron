@@ -1,5 +1,6 @@
 const ipc = require('electron').ipcRenderer
 
+const userNameDiv = document.querySelector('.nav-header-usr')
 const selfSection = document.getElementById('main-window')
 const fileSearchInput = document.getElementById('main-file-search')
 const fileUploadBtn = document.getElementById('main-file-upload')
@@ -112,7 +113,9 @@ selfSection.classList.add('is-shown')
 let fileIconList = {}
 let cur = null
 
-ipc.on('get-files-reply', (evt, files, curPath) => {
+ipc.on('get-usr-reply', (evt, usrName) => {
+  userNameDiv.innerHTML = usrName
+}).on('get-files-reply', (evt, files, curPath) => {
   for(let k in fileIconList) {
     fileIconList[k].destroy()
   }
@@ -129,5 +132,6 @@ ipc.on('get-files-reply', (evt, files, curPath) => {
   ipc.send('get-files', cur, cur=='/')
 })
 
+ipc.send('get-usr')
 ipc.send('get-files', '/', true)
 

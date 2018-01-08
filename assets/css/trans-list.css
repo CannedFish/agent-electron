@@ -137,6 +137,7 @@
   position: relative;
   top: -15px;
   cursor: pointer;
+  display: none;
 }
 .trans-list-row .action.open {
   margin-left: 160px;
@@ -148,6 +149,7 @@
   display: inline-block;
   margin-left: 20px;
   width: 286px;
+  display: none;
 }
 .trans-list-row .progress-info .bar {
   height: 16px;

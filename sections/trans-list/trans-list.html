@@ -5,13 +5,13 @@
       <button id="downloading" type="button" class="trans-list-tab-btn downloading">正在下载</button>
       <button id="completed" type="button" class="trans-list-tab-btn completed">传输完成</button>
       <button id="to-main-window" type="button" class="toggle">我的网盘</button>
-      <button id="trans-list-start" type="button" class="ctrl-btn trans-list-start">全部开始</button>
-      <button id="trans-list-end" type="button" class="ctrl-btn trans-list-end">全部取消</button>
-      <button id="trans-list-clear" type="button" class="ctrl-btn trans-list-clear">清除所有记录</button>
+      <button id="trans-list-start" type="button" class="ctrl-btn trans-list-start display-hidden">全部开始</button>
+      <button id="trans-list-end" type="button" class="ctrl-btn trans-list-end display-hidden">全部取消</button>
+      <button id="trans-list-clear" type="button" class="ctrl-btn trans-list-clear display-hidden">清除所有记录</button>
     </header>
     <div class="content-body">
       <div id="tab-upload" class="trans-list-tab">
-        <div class="trans-list-progress-row">
+        <div class="trans-list-progress-row display-hidden">
           <span class="progress-icon iconfont icon-shangchuan1"></span>
           <span class="progress-title">上传总进度</span>
           <span class="progressbar total">
@@ -21,7 +21,7 @@
         </div>
       </div>
       <div id="tab-download" class="trans-list-tab">
-        <div class="trans-list-progress-row">
+        <div class="trans-list-progress-row display-hidden">
           <span class="progress-icon iconfont icon-iconfontxiazai"></span>
           <span class="progress-title">下载总进度</span>
           <span class="progressbar total">

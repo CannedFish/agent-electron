@@ -57,12 +57,14 @@
   font-size: 14px;
   color: #666;
   cursor: pointer;
+  display: none;
 }
 
 .login-checkbox {
   width: 16px;
   height: 16px;
   top: 196px;
+  display: none;
 }
 
 .login-checkbox.repwd {
@@ -81,6 +83,7 @@
   font-size: 14px;
   color: #666666;
   top: 196px;
+  display: none;
 }
 
 .login-checkbox-tip.repwdtip {

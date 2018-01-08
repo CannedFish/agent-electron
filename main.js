@@ -19,11 +19,11 @@ function initialize () {
   const mainWin = require(path.join(__dirname, 'main-process/main-window/main-window.js'))
 
   app.on('ready', function () {
-    loginWin.create(app.getName(), (err, loginWindow) => {
+    loginWin.create(app.getName(), (err, loginWindow, usr) => {
       if(err != null) {
         console.log(err)
       }
-      mainWin.create(app.getName())
+      mainWin.create(app.getName(), usr)
       autoUpdater.initialize()
       loginWindow.close()
     })

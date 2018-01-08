@@ -22,16 +22,16 @@ ipc.on('login', function(event, arg) {
       event.sender.send('login-reply', 'failed with some reason')
     } else {
       event.sender.send('login-reply', null)
-      if(repwd) {
-        settings.set('remember-password', repwd)
-        settings.set('username', usr)
-        settings.set('password', pwd)
-      }
-      if(autologin) {
-        settings.set('auto-login', autologin)
-      }
+      /* if(repwd) { */
+        // settings.set('remember-password', repwd)
+        // settings.set('username', usr)
+        // settings.set('password', pwd)
+      // }
+      // if(autologin) {
+        // settings.set('auto-login', autologin)
+      /* } */
       loginWindow.hide()
-      after_login(null, loginWindow)
+      after_login(null, loginWindow, info[0])
     }
   })
 }).on('re-usr', (event, arg) => {

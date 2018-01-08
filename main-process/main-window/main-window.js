@@ -10,8 +10,10 @@ const common = require(path.join(__dirname, '../../common.js'))
 const debug = /--debug/.test(process.argv[2])
 
 var mainWindow = null
+var usrName = null
 
-function create(windowName) {
+function create(windowName, usr) {
+  usrName = usr
   var windowOptions = {
     width: 1280,
     minWidth: 680,
@@ -38,6 +40,7 @@ function create(windowName) {
 
   mainWindow.on('closed', function () {
     mainWindow = null
+    usrName = null
   })
 
   mainWindow.webContents.on('will-navigate', (evt) => {
@@ -61,7 +64,9 @@ function instance() {
 }
 exports.instance = instance
 
-ipc.on('get-files', (evt, cur, dir) => {
+ipc.on('get-usr', (evt) => {
+  evt.sender.send('get-usr-reply', usrName)
+}).on('get-files', (evt, cur, dir) => {
   console.log(cur, dir)
   if(dir) {
     common.getContainers((err, rets) => {
