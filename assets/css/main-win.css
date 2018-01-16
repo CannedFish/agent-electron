@@ -51,7 +51,7 @@
   background: #F9F9F9;
 }
 .content .content-header .btn:active {
-  text-shadow: 0 0 0.2em #509ED1, -0 -0 0.2em #509ED1;
+  /* text-shadow: 0 0 0.2em #509ED1, -0 -0 0.2em #509ED1; */
   width: 78px;
   height: 28px;
   border: 3px solid #509ED1;
@@ -89,7 +89,7 @@
   outline: none;
 }
 .content .content-header .toggle:active {
-  text-shadow: 0 0 0.2em #FFF, -0 -0 0.2em #FFF;
+  /* text-shadow: 0 0 0.2em #FFF, -0 -0 0.2em #FFF; */
   left: 840px;
   top: 51px;
   width: 146px;
@@ -110,7 +110,7 @@
 }
 .content .content-body .file-icon:hover {
   border: 2px solid rgba(80, 158, 209, 0.2);
-  overflow: initial;
+  /* overflow: initial; */
 }
 .content .content-body .file-icon.is-selected {
   background: rgba(80, 158, 209, 0.2);
@@ -166,7 +166,7 @@
   opacity: 1;
 }
 .upload-area .btn:active {
-  text-shadow: 0 0 0.2em #FFF, -0 -0 0.2em #FFF;
+  /* text-shadow: 0 0 0.2em #FFF, -0 -0 0.2em #FFF; */
   top: 39px;
   width: 118px;
   height: 38px;

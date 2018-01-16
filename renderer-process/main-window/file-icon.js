@@ -23,6 +23,7 @@ class FileIcon {
   show() {
     this._obj.querySelector('.icon-img').innerHTML = iconString[this._type]
     this._obj.querySelector('.icon-txt').innerHTML = this._name
+    this._obj.title = this._name
 
     var self = this
     this._obj.addEventListener('click', (evt) => {

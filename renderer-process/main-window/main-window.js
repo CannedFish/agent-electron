@@ -37,15 +37,27 @@ uploadIcon.addEventListener('click', (evt) => {
 
 fileUploadBtn.addEventListener('click', (evt) => {
   console.log("upload file")
-  uploadArea.classList.add("is-shown")
+  if(cur == '/') {
+    alert("当前目录不允许上传文件")
+  } else {
+    uploadArea.classList.add("is-shown")
+  }
 })
 
 fileDownloadBtn.addEventListener('click', (evt) => {
   console.log("download file")
   let icon_selected = fileExplore.querySelector('.is-selected')
-  let icon_name = icon_selected.querySelector('.icon-txt').innerHTML
-  // let fileInfo = fileIconList[icon_name].fileInfo()
-  ipc.send('download-show', fileIconList[icon_name].fileInfo())
+  if(icon_selected != null) {
+    let icon_name = icon_selected.querySelector('.icon-txt').innerHTML
+    let fileInfo = fileIconList[icon_name].fileInfo()
+    if(fileInfo.type == 0) {
+      alert("当前不支持文件夹下载")
+    } else {
+      ipc.send('download-show', fileInfo)
+    }
+  } else {
+    alert('请先选择要下载的文件')
+  }
 })
 
 fileNewBtn.addEventListener('click', (evt) => {
@@ -66,10 +78,14 @@ const uploadTip = uploadArea.querySelector('.tip')
 const origTip = "拖拽至此上传或点击上传"
 
 uploadAreaUploadBtn.addEventListener('click', (evt) => {
-  ipc.send('upload', uploadFile, cur)
-  uploadArea.classList.remove("is-shown")
-  uploadTip.innerHTML = origTip
-  uploadFile = null
+  if(uploadFile == null) {
+    alert("未指定需要上传的文件")
+  } else {
+    ipc.send('upload', uploadFile, cur)
+    uploadArea.classList.remove("is-shown")
+    uploadTip.innerHTML = origTip
+    uploadFile = null
+  }
 })
 
 uploadAreaCancelBtn.addEventListener('click', (evt) => {
@@ -128,6 +144,11 @@ ipc.on('get-usr-reply', (evt, usrName) => {
   })
 
   cur = curPath
+  if(cur == '/') {
+    uploadIcon.classList.add('is-hidden')
+  } else {
+    uploadIcon.classList.remove('is-hidden')
+  }
 }).on('upload-complete', (evt) => {
   ipc.send('get-files', cur, cur=='/')
 })

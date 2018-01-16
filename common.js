@@ -218,13 +218,15 @@ function uploadObject(uploadFilePath, fileSize, container, callback) {
     })
   })
 
-  let now = new Date()
+  let now = (new Date()).toISOString().split('.')[0].replace(/[-:T]/g, '')
+  let ext = fileName.split('.')
+  let fmtFileName = `${ext[0]}-${now}.${ext[1]}`
   let payload = `--${boundaryKey}\r\nContent-Disposition: form-data; name="user"\r\n\r\n${info.usr}\r\n`
         + `--${boundaryKey}\r\nContent-Disposition: form-data; name="key"\r\n\r\n${info.pwd}\r\n`
         + `--${boundaryKey}\r\nContent-Disposition: form-data; name="auth_url"\r\n\r\n${info.auth_url}\r\n`
         + `--${boundaryKey}\r\nContent-Disposition: form-data; name="tenant_name"\r\n\r\n${info.tenant_name}\r\n`
         + `--${boundaryKey}\r\nContent-Disposition: form-data; name="container_name"\r\n\r\n${container}\r\n`
-        + `--${boundaryKey}\r\nContent-Disposition: form-data; name="object_name"\r\n\r\n${fileName+'.'+now.toISOString().replace(/:/g, '-')}\r\n`
+        + `--${boundaryKey}\r\nContent-Disposition: form-data; name="object_name"\r\n\r\n${fmtFileName}\r\n`
         + `--${boundaryKey}\r\nContent-Disposition: form-data; name="orig_file_name"\r\n\r\n${fileName}\r\n`
         + `--${boundaryKey}\r\nContent-Disposition: form-data; name="upload_file"; filename="${fileName}"\r\n\r\n`
   let endStr = `\r\n--${boundaryKey}--\r\n`

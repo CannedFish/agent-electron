@@ -23,8 +23,8 @@ function instance() {
       show: false,
       minimizable: false,
       maximizable: false,
-      resizable: false,
-      alwaysOnTop: true
+      resizable: false/* , */
+      /* alwaysOnTop: true */
     })
     downloadWindow.loadURL(path.join('file://', __dirname
       , '../../sections/main-window/download-window.html'))
@@ -54,8 +54,10 @@ ipc.on('download-show', (evt, fileobj) => {
     properties: ['openDirectory'],
     title: "请选择下载路径"
   }, (download_path) => {
-    console.log(download_path)
-    evt.sender.send('download-path-reply', download_path[0])
+    if(typeof(download_path) !== 'undefined') {
+      console.log(download_path)
+      evt.sender.send('download-path-reply', download_path[0])
+    }
   })
 }).on('download', (evt, fileobj, download_to) => {
   // generate a download session ID
