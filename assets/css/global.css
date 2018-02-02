@@ -193,9 +193,10 @@ body {
 .content .content-body {
   position: absolute;
   top: 163px;
-  width: 1014px;
-  height: 687px;
+  width: 1010px;
+  height: 625px;
   padding-left: 10px;
+  overflow-x: hidden;
   overflow-y: auto;
 }
 

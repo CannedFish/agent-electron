@@ -108,11 +108,14 @@ exports.getContainers = getContainers
 function getObjects(containerName, callback) {
   if(config.offline_debug) {
     setTimeout((cb) => {
-      cb(null, [
-        {name: '文档1', type: 1, size: '34MB', container: 'container'},
-        {name: '文档2', type: 1, size: '432MB', container: 'container'},
-        {name: '文档3-234234-235234-123-32423-5345234232-1234123412432-234', type: 1, size: '98MB', container: 'container'}
-      ])
+      cb(null, [...Array(100).keys()].map((i) => {
+        return {
+          name: `文档${i}-234234-235234-123-32423-5345234232-1234123412432-234`,
+          type: 1,
+          size: '98MB',
+          container: 'container'
+        }
+      }))
     }, 3000, callback)
     return 
   }
@@ -219,8 +222,8 @@ function uploadObject(uploadFilePath, fileSize, container, callback) {
   })
 
   let now = (new Date()).toISOString().split('.')[0].replace(/[-:T]/g, '')
-  let ext = fileName.split('.')
-  let fmtFileName = `${ext[0]}-${now}.${ext[1]}`
+  let ext = path.extname(fileName)
+  let fmtFileName = `${fileName.substr(0, fileName.indexOf(ext))}-${now}${ext}`
   let payload = `--${boundaryKey}\r\nContent-Disposition: form-data; name="user"\r\n\r\n${info.usr}\r\n`
         + `--${boundaryKey}\r\nContent-Disposition: form-data; name="key"\r\n\r\n${info.pwd}\r\n`
         + `--${boundaryKey}\r\nContent-Disposition: form-data; name="auth_url"\r\n\r\n${info.auth_url}\r\n`

@@ -1,7 +1,7 @@
 {
   "name": "AgentElectron",
   "productName": "Agent Electron",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Agent client implemented based on Electron",
   "private": true,
   "main": "main.js",
