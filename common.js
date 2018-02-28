@@ -184,7 +184,7 @@ function getObjects(containerName, callback) {
 exports.getObjects = getObjects
 
 function uploadObject(uploadFilePath, fileSize, container, callback) {
-  console.log(`POST http://${config.api_host}:${config.api_port}/api/upload_object`)
+  // console.log(`POST http://${config.api_host}:${config.api_port}/api/upload_object`)
 
   if(config.offline_debug) {
     setTimeout((cb) => {
@@ -206,7 +206,7 @@ function uploadObject(uploadFilePath, fileSize, container, callback) {
   doPost('/api/upload_object', {
     user: info.usr,
     key: info.pwd,
-    auth_url: info.auto_url,
+    auth_url: info.auth_url,
     tenant_name: info.tenant_name,
     container_name: container,
     object_name: fmtFileName,
@@ -216,6 +216,7 @@ function uploadObject(uploadFilePath, fileSize, container, callback) {
     if(err) {
       return callback(err)
     }
+    console.log(ret)
     return callback(null, ret)
   })
   /* const boundaryKey = Math.random().toString(16) */
