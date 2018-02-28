@@ -198,57 +198,77 @@ function uploadObject(uploadFilePath, fileSize, container, callback) {
   if(!info.token) {
     return callback('Please authenticate first')
   }
-  const boundaryKey = Math.random().toString(16)
+
   const fileName = path.basename(uploadFilePath)
-
-  const req = net.request({
-    method: 'POST',
-    protocol: 'http:',
-    hostname: config.api_host,
-    port: config.api_port,
-    path: '/api/upload_object'
-  })
-
-  req.on('response', (resp) => {
-    if(resp.statusCode != 200) {
-      return callback(`Authenticate failed: ${resp.statusCode}`)
-    }
-    let data = ''
-    resp.on('data', (chunk) => {
-      data += chunk
-    }).on('end', () => {
-      return callback(null, JSON.parse(data))
-    })
-  })
-
   let now = (new Date()).toISOString().split('.')[0].replace(/[-:T]/g, '')
   let ext = path.extname(fileName)
   let fmtFileName = `${fileName.substr(0, fileName.indexOf(ext))}-${now}${ext}`
-  let payload = `--${boundaryKey}\r\nContent-Disposition: form-data; name="user"\r\n\r\n${info.usr}\r\n`
-        + `--${boundaryKey}\r\nContent-Disposition: form-data; name="key"\r\n\r\n${info.pwd}\r\n`
-        + `--${boundaryKey}\r\nContent-Disposition: form-data; name="auth_url"\r\n\r\n${info.auth_url}\r\n`
-        + `--${boundaryKey}\r\nContent-Disposition: form-data; name="tenant_name"\r\n\r\n${info.tenant_name}\r\n`
-        + `--${boundaryKey}\r\nContent-Disposition: form-data; name="container_name"\r\n\r\n${container}\r\n`
-        + `--${boundaryKey}\r\nContent-Disposition: form-data; name="object_name"\r\n\r\n${fmtFileName}\r\n`
-        + `--${boundaryKey}\r\nContent-Disposition: form-data; name="orig_file_name"\r\n\r\n${fileName}\r\n`
-        + `--${boundaryKey}\r\nContent-Disposition: form-data; name="upload_file"; filename="${fileName}"\r\n\r\n`
-  let endStr = `\r\n--${boundaryKey}--\r\n`
-
-
-  req.setHeader('Content-Type', `multipart/form-data; boundary=${boundaryKey}`)
-  req.setHeader('Content-Length', Buffer.byteLength(payload)+fileSize+Buffer.byteLength(endStr))
-
-  console.log('payload', payload)
-  req.write(payload)
-  
-  let rs = fs.createReadStream(uploadFilePath)
-  rs.on('data', (chunk) => {
-    console.log('file chunk', chunk)
-    req.write(chunk)
-  }).on('end', () => {
-    console.log('end string', endStr)
-    req.end(endStr)
+  doPost('/api/upload_object', {
+    user: info.usr,
+    key: info.pwd,
+    auth_url: info.auto_url,
+    tenant_name: info.tenant_name,
+    container_name: container,
+    object_name: fmtFileName,
+    orig_file_name: fileName,
+    upload_file: uploadFilePath
+  }, (err, ret) => {
+    if(err) {
+      return callback(err)
+    }
+    return callback(null, ret)
   })
+  /* const boundaryKey = Math.random().toString(16) */
+  // const fileName = path.basename(uploadFilePath)
+
+  // const req = net.request({
+    // method: 'POST',
+    // protocol: 'http:',
+    // hostname: config.api_host,
+    // port: config.api_port,
+    // path: '/api/upload_object'
+  // })
+
+  // req.on('response', (resp) => {
+    // if(resp.statusCode != 200) {
+      // return callback(`Authenticate failed: ${resp.statusCode}`)
+    // }
+    // let data = ''
+    // resp.on('data', (chunk) => {
+      // data += chunk
+    // }).on('end', () => {
+      // return callback(null, JSON.parse(data))
+    // })
+  // })
+
+  // let now = (new Date()).toISOString().split('.')[0].replace(/[-:T]/g, '')
+  // let ext = path.extname(fileName)
+  // let fmtFileName = `${fileName.substr(0, fileName.indexOf(ext))}-${now}${ext}`
+  // let payload = `--${boundaryKey}\r\nContent-Disposition: form-data; name="user"\r\n\r\n${info.usr}\r\n`
+        // + `--${boundaryKey}\r\nContent-Disposition: form-data; name="key"\r\n\r\n${info.pwd}\r\n`
+        // + `--${boundaryKey}\r\nContent-Disposition: form-data; name="auth_url"\r\n\r\n${info.auth_url}\r\n`
+        // + `--${boundaryKey}\r\nContent-Disposition: form-data; name="tenant_name"\r\n\r\n${info.tenant_name}\r\n`
+        // + `--${boundaryKey}\r\nContent-Disposition: form-data; name="container_name"\r\n\r\n${container}\r\n`
+        // + `--${boundaryKey}\r\nContent-Disposition: form-data; name="object_name"\r\n\r\n${fmtFileName}\r\n`
+        // + `--${boundaryKey}\r\nContent-Disposition: form-data; name="orig_file_name"\r\n\r\n${fileName}\r\n`
+        // + `--${boundaryKey}\r\nContent-Disposition: form-data; name="upload_file"; filename="${fileName}"\r\n\r\n`
+  // let endStr = `\r\n--${boundaryKey}--\r\n`
+
+
+  // req.setHeader('Content-Type', `multipart/form-data; boundary=${boundaryKey}`)
+  // req.setHeader('Content-Length', Buffer.byteLength(payload)+fileSize+Buffer.byteLength(endStr))
+
+  // console.log('payload', payload)
+  // req.write(payload)
+  
+  // let rs = fs.createReadStream(uploadFilePath)
+  // rs.on('data', (chunk) => {
+    // console.log('file chunk', chunk)
+    // req.write(chunk)
+  // }).on('end', () => {
+    // console.log('end string', endStr)
+    // req.end(endStr)
+  /* }) */
 }
 exports.uploadObject = uploadObject
 
