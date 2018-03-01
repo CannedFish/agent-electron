@@ -188,9 +188,10 @@ function uploadObject(uploadFilePath, fileSize, container, callback) {
 
   if(config.offline_debug) {
     setTimeout((cb) => {
-      cb(null, {
-        name: uploadFilePath
-      })
+      // cb(null, {
+        // name: uploadFilePath
+      // })
+      cb({err: "failed"})
     }, 10000, callback)
     return 
   }
@@ -217,7 +218,11 @@ function uploadObject(uploadFilePath, fileSize, container, callback) {
       return callback(err)
     }
     console.log(ret)
-    return callback(null, ret)
+    if(ret.errcode == 0) {
+      return callback(ret)
+    } else {
+      return callback(null, ret)
+    }
   })
   /* const boundaryKey = Math.random().toString(16) */
   // const fileName = path.basename(uploadFilePath)
