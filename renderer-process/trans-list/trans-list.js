@@ -83,6 +83,9 @@ function unselectedAllTab() {
     addCompletedRow(filetype, filename, filesize, date, 0)
     uploadRows[sessionId].destroy()
     delete uploadRows[sessionId]
+  }).on('upload-err', (evt, fileInfo, err, sessionId) => {
+    uploadRows[sessionId].destroy()
+    delete uploadRows[sessionId]
   }).on('download-complete', (evt, filetype, filename, filesize, date, sessionId) => {
     // add a row in completed tab
     addCompletedRow(filetype, filename, filesize, date, 1)

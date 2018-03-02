@@ -203,7 +203,8 @@ function uploadObject(uploadFilePath, fileSize, container, callback) {
   const fileName = path.basename(uploadFilePath)
   let now = (new Date()).toISOString().split('.')[0].replace(/[-:T]/g, '')
   let ext = path.extname(fileName)
-  let fmtFileName = `${fileName.substr(0, fileName.indexOf(ext))}-${now}${ext}`
+  let filePrefix = (ext == '' ? fileName : fileName.substr(0, fileName.indexOf(ext)))
+  let fmtFileName = `${filePrefix}-${now}${ext}`
   doPost('/api/upload_object', {
     user: info.usr,
     key: info.pwd,
@@ -212,7 +213,8 @@ function uploadObject(uploadFilePath, fileSize, container, callback) {
     container_name: container,
     object_name: fmtFileName,
     orig_file_name: fileName,
-    upload_file: uploadFilePath
+    upload_file: uploadFilePath,
+    file_size: fileSize
   }, (err, ret) => {
     if(err) {
       return callback(err)

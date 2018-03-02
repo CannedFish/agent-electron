@@ -152,7 +152,7 @@ ipc.on('get-usr-reply', (evt, usrName) => {
 }).on('upload-complete', (evt) => {
   ipc.send('get-files', cur, cur=='/')
 }).on('upload-err', (evt, fileInfo, err) => {
-  alert(`${fileInfo.name}上传失败：\n${err}`)
+  alert(`${fileInfo.name}上传失败：\n${JSON.stringify(err)}`)
 })
 
 ipc.send('get-usr')

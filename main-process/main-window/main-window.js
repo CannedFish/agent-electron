@@ -93,7 +93,7 @@ ipc.on('get-usr', (evt) => {
         name: uploadFile.name,
         type: 1,
         size: uploadFile.size
-      }, err)
+      }, err, uploadSessionId)
     }
     return evt.sender.send('upload-complete', 1, uploadFile.name, uploadFile.size
       , (new Date).toLocaleDateString().replace(/\//g, '-')
